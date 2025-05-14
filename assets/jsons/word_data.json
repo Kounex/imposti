@@ -1,0 +1,144 @@
+{
+  "categories": [
+    {
+      "uuid": "3a1aed5f-0087-490c-8bb4-899c7a22b30d",
+      "base": true,
+      "name": {
+        "de": "Allgemein",
+        "en": "General"
+      },
+      "words": {
+        "de": [
+          "Schnee",
+          "Feuer",
+          "Licht",
+          "Wasser",
+          "Zeit",
+          "Liebe",
+          "Traum"
+        ],
+        "en": [
+          "Snow",
+          "Fire",
+          "Light",
+          "Water",
+          "Time",
+          "Love",
+          "Dream"
+        ]
+      }
+    },
+    {
+      "uuid": "04ef5779-dda1-4700-a87a-7b4b4b3e9b36",
+      "base": true,
+      "name": {
+        "de": "Tiere",
+        "en": "Animals"
+      },
+      "words": {
+        "de": [
+          "Hund",
+          "Katze",
+          "Elefant",
+          "Vogel",
+          "Fisch",
+          "Pferd",
+          "Biene"
+        ],
+        "en": [
+          "Dog",
+          "Cat",
+          "Elephant",
+          "Bird",
+          "Fish",
+          "Horse",
+          "Bee"
+        ]
+      }
+    },
+    {
+      "uuid": "fa3da432-8bb2-44b3-a6d8-0b043e79d682",
+      "base": true,
+      "name": {
+        "de": "Essen",
+        "en": "Food"
+      },
+      "words": {
+        "de": [
+          "Pizza",
+          "Brot",
+          "Käse",
+          "Apfel",
+          "Eis",
+          "Suppe",
+          "Salat"
+        ],
+        "en": [
+          "Pizza",
+          "Bread",
+          "Cheese",
+          "Apple",
+          "Ice cream",
+          "Soup",
+          "Salad"
+        ]
+      }
+    },
+    {
+      "uuid": "eb0b4890-4b49-4302-ac05-788b7dc74698",
+      "base": true,
+      "name": {
+        "de": "Farben",
+        "en": "Colors"
+      },
+      "words": {
+        "de": [
+          "Rot",
+          "Blau",
+          "Grün",
+          "Gelb",
+          "Schwarz",
+          "Weiß",
+          "Orange"
+        ],
+        "en": [
+          "Red",
+          "Blue",
+          "Green",
+          "Yellow",
+          "Black",
+          "White",
+          "Orange"
+        ]
+      }
+    },
+    {
+      "uuid": "3265e386-2c4d-4989-bde7-b99bef912f6d",
+      "base": true,
+      "name": {
+        "de": "Gefühle",
+        "en": "Emotions"
+      },
+      "words": {
+        "de": [
+          "Glück",
+          "Angst",
+          "Traurigkeit",
+          "Wut",
+          "Freude",
+          "Langeweile",
+          "Hoffnung"
+        ],
+        "en": [
+          "Happiness",
+          "Fear",
+          "Sadness",
+          "Anger",
+          "Joy",
+          "Boredom",
+          "Hope"
+        ]
+      }
+    }
+  ]
+}
