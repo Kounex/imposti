@@ -135,7 +135,7 @@ class _SettingsViewState extends State<SettingsView> {
                           yesText: 'gYes'.tr(),
                           onYes:
                               (_) => LaunchUtils.launchApp(
-                                Uri.https('github.com', '/kounex'),
+                                Uri.https('github.com', '/kounex/imposti'),
                               ),
                         ),
                       ),
