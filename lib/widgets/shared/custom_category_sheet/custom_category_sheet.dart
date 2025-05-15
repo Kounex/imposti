@@ -60,6 +60,15 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
     }
   }
 
+  void _handleWordTap(String word) => ModalUtils.showBaseDialog(
+    context,
+    WordDialog(
+      word: word,
+      onDelete: () => _handleWordDialogDelete(word),
+      onSave: (text) => _handleWordDialogSave(text, word),
+    ),
+  );
+
   void _handleWordDialogDelete(String word) {
     setState(() => _words.remove(word));
   }
@@ -176,21 +185,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                             children: List.from(
                               _words.map(
                                 (word) => ListTile(
-                                  onTap:
-                                      () => ModalUtils.showBaseDialog(
-                                        context,
-                                        WordDialog(
-                                          word: word,
-                                          onDelete:
-                                              () =>
-                                                  _handleWordDialogDelete(word),
-                                          onSave:
-                                              (text) => _handleWordDialogSave(
-                                                text,
-                                                word,
-                                              ),
-                                        ),
-                                      ),
+                                  onTap: () => _handleWordTap(word),
                                   title: Text(word),
                                   trailing: Icon(Icons.edit),
                                 ),
