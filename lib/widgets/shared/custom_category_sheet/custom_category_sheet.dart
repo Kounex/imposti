@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:imposti/models/category/category.dart';
+import 'package:imposti/models/group/group.dart';
 import 'package:imposti/models/hive_adapters.dart';
 import 'package:imposti/widgets/shared/custom_category_sheet/word_dialog.dart';
 
@@ -88,9 +89,30 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
         noText: 'gNo'.tr(),
         yesText: 'gYes'.tr(),
         isYesDestructive: true,
-        onYes: (_) {
-          widget.category!.delete();
-          Navigator.of(context).pop();
+        onYes: (_) async {
+          await widget.category!.delete();
+
+          /// Go through all groups and remove the category we just
+          /// deleted from their active category list
+          for (final group in Hive.box<Group>(HiveKey.group.name).values) {
+            group.categoryUuids.remove(widget.category!.uuid);
+
+            /// Check if the to be deleted category is the only active
+            /// category in a group -> then we need to set the default ones
+            if (group.categoryUuids.isEmpty) {
+              group.categoryUuids.addAll(
+                Hive.box<Category>(HiveKey.category.name).values
+                    .where((baseCategory) => baseCategory.base)
+                    .map((baseCategory) => baseCategory.uuid),
+              );
+
+              await group.save();
+            }
+          }
+
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
         },
       ),
     );
