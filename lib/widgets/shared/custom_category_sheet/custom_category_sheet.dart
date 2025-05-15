@@ -153,6 +153,8 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                     rightPadding: 0,
                     bottomPadding: 0,
                     constrained: false,
+                    paintBorder: _name.submitted && _words.isEmpty,
+                    borderColor: Theme.of(context).colorScheme.error,
                     paddingChild: EdgeInsets.zero,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -199,6 +201,17 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                       },
                     ),
                   ),
+                  if (_name.submitted && _words.isEmpty) ...[
+                    SizedBox(height: DesignSystem.spacing.x8),
+                    Fader(
+                      child: Text(
+                        'sharedInputDialogRequiredError'.tr(),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                    ),
+                  ],
                   SizedBox(height: DesignSystem.spacing.x24),
                   CupertinoButton.filled(
                     onPressed:
@@ -213,6 +226,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                 ],
               ),
             ),
+
             SizedBox(height: DesignSystem.spacing.x24),
             if (widget.category != null) ...[
               SizedBox(
@@ -234,7 +248,8 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
               width: double.infinity,
               child: CupertinoButton.filled(
                 onPressed: () {
-                  if (_name.isValid) {
+                  setState(() {});
+                  if (_name.isValid && _words.isNotEmpty) {
                     widget.onSave(_name.textAtSubmission.trim(), _words);
                     Navigator.of(context).pop();
                   }
