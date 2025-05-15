@@ -60,6 +60,7 @@ class _GameViewState extends State<GameView> {
       child:
           _group != null
               ? ImpostiScaffold(
+                contentPadding: EdgeInsets.zero,
                 body: Stack(
                   alignment: Alignment.center,
                   fit: StackFit.expand,

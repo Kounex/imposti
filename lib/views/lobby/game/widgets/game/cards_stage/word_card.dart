@@ -64,19 +64,21 @@ class _WordCardState extends State<WordCard>
   void _checkRevealProgress() {
     final RenderBox? wordBox =
         _wordKey.currentContext?.findRenderObject() as RenderBox?;
-
     final RenderBox? playerCardBox =
         _playerCardKey.currentContext?.findRenderObject() as RenderBox?;
+
     if (wordBox != null && playerCardBox != null) {
       final Offset wordPosition = wordBox.localToGlobal(Offset.zero);
       final Offset playerCardPosition = playerCardBox.localToGlobal(
         Offset.zero,
       );
 
-      if (!_isRevealed && playerCardPosition.dy - wordPosition.dy >= 40) {
+      if (!_isRevealed &&
+          playerCardPosition.dy - wordPosition.dy >= wordBox.size.height) {
         _isRevealed = true;
         widget.onWordFullyRevealed?.call();
-      } else if (_isRevealed && playerCardPosition.dy - wordPosition.dy < 40) {
+      } else if (_isRevealed &&
+          playerCardPosition.dy - wordPosition.dy < wordBox.size.height) {
         _isRevealed = false;
       }
     }
@@ -105,36 +107,40 @@ class _WordCardState extends State<WordCard>
                 children: [
                   Positioned(
                     top: DesignSystem.spacing.x64,
-                    left: 0,
-                    right: 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BaseCupertinoListTileIcon(
-                          widget.imposter
-                              ? Icons.android
-                              : CupertinoIcons.person_solid,
-                          size: DesignSystem.size.x32,
-                          iconSize: DesignSystem.size.x28,
-                          backgroundColor:
-                              widget.imposter ? Colors.red : Colors.blue,
-                        ),
-                        SizedBox(width: DesignSystem.spacing.x18),
-                        AutoSizeText(
-                          key: _wordKey,
-                          widget.word,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.montserrat(
-                            textStyle: Theme.of(
-                              context,
-                            ).textTheme.displaySmall?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
+                    left: DesignSystem.spacing.x24,
+                    right: DesignSystem.spacing.x24,
+                    child: FittedBox(
+                      key: _wordKey,
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.bottomCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BaseCupertinoListTileIcon(
+                            widget.imposter
+                                ? Icons.android
+                                : CupertinoIcons.person_solid,
+                            size: DesignSystem.size.x32,
+                            iconSize: DesignSystem.size.x28,
+                            backgroundColor:
+                                widget.imposter ? Colors.red : Colors.blue,
+                          ),
+                          SizedBox(width: DesignSystem.spacing.x18),
+                          AutoSizeText(
+                            widget.word,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              textStyle: Theme.of(
+                                context,
+                              ).textTheme.displaySmall?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
