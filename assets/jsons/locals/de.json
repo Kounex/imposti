@@ -52,7 +52,10 @@
     "sharedCustomCategoryDialogDeleteTitle": "Kategorie löschen?",
     "sharedCustomCategoryDialogDeleteBody": "Sicher, dass du diese Kategorie löschen willst?",
     "sharedInputDialogRequiredError": "Darf nicht leer sein!",
-    "sharedInputDialogExistsError": "Name existiert bereits!",
+    "sharedInputDialogExistsError": {
+        "one": "{} existiert bereits!",
+        "two": "{} existieren bereits!"
+    },
     "gameBtnNextPlayer": "Nächster Spieler",
     "gameDialogExitGameTitle": "Spiel beenden?",
     "gameDialogExitGameBody": "Sicher, dass du das Spiel beenden willst?",
@@ -61,7 +64,9 @@
     "gameRevealDescription": "Habt ihr die richtigen Personen erraten?",
     "gameRevealBtnAnotherRound": "Neue Runde",
     "gGame": "Spiel",
+    "gName": "Name",
     "gMore": "Mehr",
+    "gWord": "Wort",
     "gLanguage": "Sprache",
     "gGerman": "Deutsch",
     "gEnglish": "Englisch",

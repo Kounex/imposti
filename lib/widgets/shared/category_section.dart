@@ -11,6 +11,8 @@ class CategorySection extends StatelessWidget {
   final List<String>? categoryUuids;
   final Widget? additionalInfo;
 
+  final bool hasLeading;
+
   final void Function(Category category)? onTap;
 
   const CategorySection({
@@ -18,17 +20,27 @@ class CategorySection extends StatelessWidget {
     required this.categories,
     this.categoryUuids,
     this.additionalInfo,
+    this.hasLeading = true,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return BaseCupertinoListSection(
-      hasLeading: false,
+      hasLeading: hasLeading,
       tiles: List.from(
         categories.map(
           (category) => BaseCupertinoListTile(
             onTap: () => onTap?.call(category),
+            leading:
+                category.emojiUnicode != null
+                    ? Text(
+                      String.fromCharCode(
+                        int.parse(category.emojiUnicode!, radix: 16),
+                      ),
+                      style: TextStyle(fontSize: 22.0),
+                    )
+                    : null,
             title: Text(
               category.name[category.base
                   ? context.locale.languageCode

@@ -47,7 +47,10 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                   ? category.uuid != widget.category!.uuid
                   : true),
         )) {
-          return 'sharedInputDialogExistsError'.tr();
+          return 'sharedInputDialogExistsError'.plural(
+            1,
+            args: ['gCategory'.plural(1)],
+          );
         }
         return null;
       },
@@ -61,8 +64,17 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
     context,
     WordDialog(
       word: word,
+      otherWords: [..._words]..remove(word),
       onDelete: () => _handleWordDialogDelete(word),
       onSave: (text) => _handleWordDialogSave(text, word),
+    ),
+  );
+
+  void _handleNewWord() => ModalUtils.showBaseDialog(
+    context,
+    WordDialog(
+      otherWords: _words,
+      onSave: (text) => _handleWordDialogSave(text),
     ),
   );
 
@@ -206,13 +218,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                   ],
                   SizedBox(height: DesignSystem.spacing.x24),
                   CupertinoButton.filled(
-                    onPressed:
-                        () => ModalUtils.showBaseDialog(
-                          context,
-                          WordDialog(
-                            onSave: (text) => _handleWordDialogSave(text),
-                          ),
-                        ),
+                    onPressed: _handleNewWord,
                     child: Text('sharedCustomCategoryBtnNewWord'.tr()),
                   ),
                 ],

@@ -23,7 +23,7 @@ types:
         index: 7
   Category:
     typeId: 2
-    nextIndex: 4
+    nextIndex: 5
     fields:
       uuid:
         index: 0
@@ -33,3 +33,5 @@ types:
         index: 2
       words:
         index: 3
+      emojiUnicode:
+        index: 4

@@ -106,6 +106,7 @@ class _CategorySheetState extends State<CategorySheet> {
                           onTap: _handleCategoryTap,
                           categories: customCategories,
                           categoryUuids: _categoryUuids,
+                          hasLeading: false,
                         ),
                         false => BaseCard(
                           topPadding: 0,

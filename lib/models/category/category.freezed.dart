@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Category {
 
- String get uuid; Map<String, String> get name; bool get base; Map<String, List<String>> get words;
+ String get uuid; Map<String, String> get name; bool get base; String? get emojiUnicode; Map<String, List<String>> get words;
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,16 +27,16 @@ $CategoryCopyWith<Category> get copyWith => _$CategoryCopyWithImpl<Category>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.uuid, uuid) || other.uuid == uuid)&&const DeepCollectionEquality().equals(other.name, name)&&(identical(other.base, base) || other.base == base)&&const DeepCollectionEquality().equals(other.words, words));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.uuid, uuid) || other.uuid == uuid)&&const DeepCollectionEquality().equals(other.name, name)&&(identical(other.base, base) || other.base == base)&&(identical(other.emojiUnicode, emojiUnicode) || other.emojiUnicode == emojiUnicode)&&const DeepCollectionEquality().equals(other.words, words));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,uuid,const DeepCollectionEquality().hash(name),base,const DeepCollectionEquality().hash(words));
+int get hashCode => Object.hash(runtimeType,uuid,const DeepCollectionEquality().hash(name),base,emojiUnicode,const DeepCollectionEquality().hash(words));
 
 @override
 String toString() {
-  return 'Category(uuid: $uuid, name: $name, base: $base, words: $words)';
+  return 'Category(uuid: $uuid, name: $name, base: $base, emojiUnicode: $emojiUnicode, words: $words)';
 }
 
 
@@ -47,7 +47,7 @@ abstract mixin class $CategoryCopyWith<$Res>  {
   factory $CategoryCopyWith(Category value, $Res Function(Category) _then) = _$CategoryCopyWithImpl;
 @useResult
 $Res call({
- String uuid, Map<String, String> name, bool base, Map<String, List<String>> words
+ String uuid, Map<String, String> name, bool base, String? emojiUnicode, Map<String, List<String>> words
 });
 
 
@@ -64,12 +64,13 @@ class _$CategoryCopyWithImpl<$Res>
 
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uuid = null,Object? name = null,Object? base = null,Object? words = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? uuid = null,Object? name = null,Object? base = null,Object? emojiUnicode = freezed,Object? words = null,}) {
   return _then(Category(
 uuid: null == uuid ? _self.uuid : uuid // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,base: null == base ? _self.base : base // ignore: cast_nullable_to_non_nullable
-as bool,words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
+as bool,emojiUnicode: freezed == emojiUnicode ? _self.emojiUnicode : emojiUnicode // ignore: cast_nullable_to_non_nullable
+as String?,words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
 as Map<String, List<String>>,
   ));
 }

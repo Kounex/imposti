@@ -17,12 +17,16 @@ class Category extends HiveObject with _$Category {
   final bool base;
 
   @override
+  final String? emojiUnicode;
+
+  @override
   final Map<String, List<String>> words;
 
   Category({
     required this.uuid,
     required this.name,
     this.base = false,
+    this.emojiUnicode,
     this.words = const {},
   });
 

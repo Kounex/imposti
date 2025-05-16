@@ -52,7 +52,10 @@
     "sharedCustomCategoryDialogDeleteTitle": "Delete category?",
     "sharedCustomCategoryDialogDeleteBody": "Are you sure you want to delete this category?",
     "sharedInputDialogRequiredError": "Must not be empty!",
-    "sharedInputDialogExistsError": "Name already exists!",
+    "sharedInputDialogExistsError": {
+        "one": "{} already exists!",
+        "two": "{} already exist!"
+    },
     "gameBtnNextPlayer": "Next player",
     "gameDialogExitGameTitle": "End game?",
     "gameDialogExitGameBody": "Are you sure you want to end the game?",
@@ -61,7 +64,9 @@
     "gameRevealDescription": "Have you guessed the right persons?",
     "gameRevealBtnAnotherRound": "New round",
     "gGame": "Game",
+    "gName": "Name",
     "gMore": "More",
+    "gWord": "Word",
     "gLanguage": "Language",
     "gGerman": "German",
     "gEnglish": "English",

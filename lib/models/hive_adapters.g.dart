@@ -73,6 +73,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
       uuid: fields[0] as String,
       name: (fields[1] as Map).cast<String, String>(),
       base: fields[2] == null ? false : fields[2] as bool,
+      emojiUnicode: fields[4] as String?,
       words:
           fields[3] == null
               ? const {}
@@ -86,7 +87,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
   @override
   void write(BinaryWriter writer, Category obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.uuid)
       ..writeByte(1)
@@ -94,7 +95,9 @@ class CategoryAdapter extends TypeAdapter<Category> {
       ..writeByte(2)
       ..write(obj.base)
       ..writeByte(3)
-      ..write(obj.words);
+      ..write(obj.words)
+      ..writeByte(4)
+      ..write(obj.emojiUnicode);
   }
 
   @override

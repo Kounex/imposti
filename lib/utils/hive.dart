@@ -13,7 +13,7 @@ class HiveUtils {
   static Future<void> resetHive() async {
     await Hive.deleteFromDisk();
     await HiveUtils.openHiveBoxes();
-    await HiveUtils.setBaseWords();
+    await HiveUtils.setBaseCategories();
   }
 
   static Future<void> openHiveBoxes() async => await Future.wait([
@@ -23,7 +23,7 @@ class HiveUtils {
     Hive.openBox<dynamic>(HiveKey.settings.name),
   ]);
 
-  static Future<void> setBaseWords() async {
+  static Future<void> setBaseCategories() async {
     final categoryBox = Hive.box<Category>(HiveKey.category.name);
 
     final jsonString = await rootBundle.loadString(
@@ -34,7 +34,7 @@ class HiveUtils {
 
     for (final category in categoryBox.values) {
       if (category.base) {
-        category.delete();
+        await category.delete();
       }
     }
 
@@ -43,6 +43,37 @@ class HiveUtils {
     );
 
     await categoryBox.addAll(categories);
+
+    await _updateGroupBaseCategories();
+  }
+
+  static Future<void> _updateGroupBaseCategories() async {
+    final categoryBox = Hive.box<Category>(HiveKey.category.name);
+    final groupBox = Hive.box<Group>(HiveKey.group.name);
+
+    final baseCategories = categoryBox.values.where(
+      (category) => category.base,
+    );
+
+    for (final group in groupBox.values) {
+      for (final categoryUuid in group.categoryUuids) {
+        final category = categoryBox.values.where(
+          (category) => category.uuid == categoryUuid,
+        );
+
+        if (category.isEmpty) {
+          group.categoryUuids.remove(categoryUuid);
+        }
+      }
+
+      if (group.categoryUuids.isEmpty) {
+        group.categoryUuids.addAll(
+          baseCategories.map((category) => category.uuid),
+        );
+      }
+
+      await group.save();
+    }
   }
 
   static Future<void> setSavedLanguage(

@@ -31,7 +31,10 @@ class PlayerDialog extends StatelessWidget {
                     (player) =>
                         player.toLowerCase() == text.trim().toLowerCase(),
                   )
-                  ? 'sharedInputDialogExistsError'.tr()
+                  ? 'sharedInputDialogExistsError'.plural(
+                    1,
+                    args: ['gName'.tr()],
+                  )
                   : null,
       deleteText: 'gDelete'.tr(),
       cancelText: 'gCancel'.tr(),

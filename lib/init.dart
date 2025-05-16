@@ -34,7 +34,7 @@ class _InitState extends State<Init> {
       await HiveUtils.setInitialThemeMode(context);
     }
     await Future.wait([
-      HiveUtils.setBaseWords(),
+      HiveUtils.setBaseCategories(),
       Future.delayed(const Duration(seconds: 1)),
     ]);
 
