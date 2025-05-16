@@ -27,6 +27,8 @@ class GroupSheet extends StatefulWidget {
 class _GroupSheetState extends State<GroupSheet> {
   late Group _group;
 
+  late final CustomValidationTextEditingController _name;
+
   @override
   void initState() {
     super.initState();
@@ -48,23 +50,46 @@ class _GroupSheetState extends State<GroupSheet> {
         ),
       );
     }
+
+    _name = CustomValidationTextEditingController(
+      text: _group.name,
+      check:
+          (text) =>
+              text != null &&
+                      Hive.box<Group>(HiveKey.group.name).values.any(
+                        (group) =>
+                            group.name?.toLowerCase() ==
+                                text.trim().toLowerCase() &&
+                            group.uuid != _group.uuid,
+                      )
+                  ? 'sharedInputDialogExistsError'.plural(
+                    1,
+                    args: ['gGroup'.plural(1)],
+                  )
+                  : null,
+    );
   }
 
   void _saveGroupAndStart() async {
-    if (widget.group != null && widget.group!.isInBox) {
-      await Hive.box<Group>(
-        HiveKey.group.name,
-      ).put(widget.group!.key, _group.copyWith(uuid: widget.group!.uuid));
-    } else {
-      await Hive.box<Group>(HiveKey.group.name).add(_group);
-    }
-    if (mounted) {
-      Navigator.of(context).pop();
-      BaseAppRouter().navigateTo(
-        context,
-        AppRoute.game,
-        params: {':groupUuid': _group.uuid},
-      );
+    if (_name.isValid) {
+      if (_name.textAtSubmission.trim().isNotEmpty) {
+        _group = _group.copyWith(name: _name.textAtSubmission);
+      }
+      if (widget.group != null && widget.group!.isInBox) {
+        await Hive.box<Group>(
+          HiveKey.group.name,
+        ).put(widget.group!.key, _group.copyWith(uuid: widget.group!.uuid));
+      } else {
+        await Hive.box<Group>(HiveKey.group.name).add(_group);
+      }
+      if (mounted) {
+        Navigator.of(context).pop();
+        BaseAppRouter().navigateTo(
+          context,
+          AppRoute.game,
+          params: {':groupUuid': _group.uuid},
+        );
+      }
     }
   }
 
@@ -162,6 +187,12 @@ class _GroupSheetState extends State<GroupSheet> {
       title: 'gGroup'.plural(1),
       actionText: 'lobbyBtnStart'.tr(),
       children: [
+        BaseAdaptiveTextField(
+          controller: _name,
+          clearButton: true,
+          placeholder: 'lobbyGroupNamePlaceholder'.tr(),
+        ),
+        SizedBox(height: DesignSystem.spacing.x24),
         BaseCupertinoListSection(
           tiles: [
             BaseCupertinoListTile(

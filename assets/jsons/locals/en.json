@@ -17,6 +17,7 @@
     },
     "lobbyBtnStart": "Let's go!",
     "gBack": "Back",
+    "lobbyGroupNamePlaceholder": "(Optional) Name of the group",
     "lobbyPlayerListDescription": "Players in the group:",
     "lobbyPlayerListEmpty": "No players yet!",
     "lobbyPlayerListDeleteNotEnough": "You need at least 3 players for this game to make sense. Rename existing players instead!",

@@ -21,6 +21,10 @@ class LobbyView extends RouterStatefulView {
 class _LobbyViewState extends State<LobbyView> {
   final ScrollController _controller = ScrollController();
 
+  String _getPlayerNames(Group group) => group.players
+      .skip(1)
+      .fold<String>(group.players.first, (prev, curr) => '$prev, $curr');
+
   @override
   Widget build(BuildContext context) {
     return ImpostiScaffold(
@@ -76,16 +80,23 @@ class _LobbyViewState extends State<LobbyView> {
                                             GroupSheet(group: group),
                                           ),
                                   title: Text(
-                                    group.name ??
-                                        group.players
-                                            .skip(1)
-                                            .fold<String>(
-                                              group.players.first,
-                                              (prev, curr) => '$prev, $curr',
-                                            ),
+                                    group.name ?? _getPlayerNames(group),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
+                                  subtitle:
+                                      group.name != null
+                                          ? Text(
+                                            _getPlayerNames(group),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: CupertinoColors
+                                                  .secondaryLabel
+                                                  .resolveFrom(context),
+                                            ),
+                                          )
+                                          : null,
                                 ),
                               ),
                             ),
