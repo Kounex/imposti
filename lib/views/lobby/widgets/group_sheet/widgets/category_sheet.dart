@@ -23,6 +23,8 @@ class CategorySheet extends StatefulWidget {
 }
 
 class _CategorySheetState extends State<CategorySheet> {
+  final ScrollController _controller = ScrollController();
+
   final List<String> _categoryUuids = [];
 
   @override
@@ -73,52 +75,58 @@ class _CategorySheetState extends State<CategorySheet> {
                   Iterable<Category> customCategories = categoryBox.values
                       .where((category) => !category.base);
 
-                  return ListView(
-                    children: [
-                      SizedBox(height: DesignSystem.spacing.x24),
-                      Text('lobbyCategoryListDescription'.tr()),
-                      SizedBox(height: DesignSystem.spacing.x24),
-                      CategorySection(
-                        onTap: _handleCategoryTap,
-                        categories: categoryBox.values.where(
-                          (category) => category.base,
-                        ),
-                        categoryUuids: _categoryUuids,
-                      ),
-                      SizedBox(height: DesignSystem.spacing.x24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('lobbyCategoryListOwnDescription'.tr()),
-                          CupertinoButton(
-                            onPressed:
-                                () =>
-                                    CustomCategoryService.addEditSheet(context),
-                            padding: EdgeInsets.zero,
-                            minSize: DesignSystem.size.x18,
-                            child: Text('gAdd'.tr()),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: DesignSystem.spacing.x24),
-                      switch (customCategories.isNotEmpty) {
-                        true => CategorySection(
+                  return Scrollbar(
+                    controller: _controller,
+                    thumbVisibility: true,
+                    child: ListView(
+                      controller: _controller,
+                      children: [
+                        SizedBox(height: DesignSystem.spacing.x24),
+                        Text('lobbyCategoryListDescription'.tr()),
+                        SizedBox(height: DesignSystem.spacing.x24),
+                        CategorySection(
                           onTap: _handleCategoryTap,
-                          categories: customCategories,
-                          categoryUuids: _categoryUuids,
-                          hasLeading: false,
-                        ),
-                        false => BaseCard(
-                          topPadding: 0,
-                          leftPadding: 0,
-                          rightPadding: 0,
-                          bottomPadding: 0,
-                          child: BasePlaceholder(
-                            text: 'lobbyCategoryListOwnEmpty'.tr(),
+                          categories: categoryBox.values.where(
+                            (category) => category.base,
                           ),
+                          categoryUuids: _categoryUuids,
                         ),
-                      },
-                    ],
+                        SizedBox(height: DesignSystem.spacing.x24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('lobbyCategoryListOwnDescription'.tr()),
+                            CupertinoButton(
+                              onPressed:
+                                  () => CustomCategoryService.addEditSheet(
+                                    context,
+                                  ),
+                              padding: EdgeInsets.zero,
+                              minSize: DesignSystem.size.x18,
+                              child: Text('gAdd'.tr()),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: DesignSystem.spacing.x24),
+                        switch (customCategories.isNotEmpty) {
+                          true => CategorySection(
+                            onTap: _handleCategoryTap,
+                            categories: customCategories,
+                            categoryUuids: _categoryUuids,
+                            hasLeading: false,
+                          ),
+                          false => BaseCard(
+                            topPadding: 0,
+                            leftPadding: 0,
+                            rightPadding: 0,
+                            bottomPadding: 0,
+                            child: BasePlaceholder(
+                              text: 'lobbyCategoryListOwnEmpty'.tr(),
+                            ),
+                          ),
+                        },
+                      ],
+                    ),
                   );
                 },
               ),
