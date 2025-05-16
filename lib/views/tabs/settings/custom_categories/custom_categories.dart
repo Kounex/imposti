@@ -28,9 +28,7 @@ class _CustomCategoriesViewState extends State<CustomCategoriesView> {
         hiveKey: HiveKey.category,
         builder: (context, categoryBox, child) {
           Iterable<Category> customCategories = categoryBox.values.where(
-            (category) =>
-                !category.base &&
-                category.words[context.locale.languageCode] != null,
+            (category) => !category.base,
           );
           return BaseCard(
             topPadding: 0,
@@ -66,9 +64,7 @@ class _CustomCategoriesViewState extends State<CustomCategoriesView> {
                             padding: EdgeInsets.only(
                               left: DesignSystem.spacing.x8,
                             ),
-                            child: Text(
-                              category.name[context.locale.languageCode]!,
-                            ),
+                            child: Text(category.name['custom']!),
                           ),
                           trailing: Icon(Icons.edit),
                         ),

@@ -136,6 +136,21 @@ class _GroupSheetState extends State<GroupSheet> {
     );
   }
 
+  String _getCategoryNames() {
+    final firstCategory =
+        _group.categories.first.name[_group.categories.first.base
+            ? context.locale.languageCode
+            : 'custom']!;
+
+    return _group.categories
+        .skip(1)
+        .fold(
+          firstCategory,
+          (prev, curr) =>
+              '$prev, ${curr.name[curr.base ? context.locale.languageCode : 'custom']!}',
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -197,17 +212,7 @@ class _GroupSheetState extends State<GroupSheet> {
                         title: Text('gCategory'.plural(2)),
                         subtitle:
                             _group.categoryUuids.isNotEmpty
-                                ? Text(
-                                  _group.categories
-                                      .skip(1)
-                                      .fold(
-                                        _group.categories.first.name[context
-                                            .locale
-                                            .languageCode]!,
-                                        (prev, curr) =>
-                                            '$prev, ${curr.name[context.locale.languageCode]!}',
-                                      ),
-                                )
+                                ? Text(_getCategoryNames())
                                 : null,
                         additionalInfo: Row(
                           children: [

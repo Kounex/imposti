@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/category/category.dart';
+import '../../models/category/category.dart';
 
 class CategorySection extends StatelessWidget {
   final Iterable<Category> categories;
@@ -29,7 +29,11 @@ class CategorySection extends StatelessWidget {
         categories.map(
           (category) => BaseCupertinoListTile(
             onTap: () => onTap?.call(category),
-            title: Text(category.name[context.locale.languageCode]!),
+            title: Text(
+              category.name[category.base
+                  ? context.locale.languageCode
+                  : 'custom']!,
+            ),
             additionalInfo:
                 additionalInfo ??
                 ((categoryUuids?.contains(category.uuid) ?? false)

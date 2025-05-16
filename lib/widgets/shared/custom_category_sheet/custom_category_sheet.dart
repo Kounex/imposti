@@ -11,16 +11,9 @@ import 'package:imposti/widgets/shared/custom_category_sheet/word_dialog.dart';
 class CustomCategorySheet extends StatefulWidget {
   final Category? category;
 
-  final String languageCode;
-
   final void Function(String name, List<String> words) onSave;
 
-  const CustomCategorySheet({
-    super.key,
-    this.category,
-    required this.languageCode,
-    required this.onSave,
-  });
+  const CustomCategorySheet({super.key, this.category, required this.onSave});
 
   @override
   State<CustomCategorySheet> createState() => _CustomCategorySheetState();
@@ -37,14 +30,18 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
     super.initState();
 
     _name = CustomValidationTextEditingController(
-      text: widget.category?.name[widget.languageCode],
+      text: widget.category?.name['custom'],
       check: (text) {
         if (text == null || text.trim().isEmpty) {
           return 'sharedInputDialogRequiredError'.tr();
         }
         if (Hive.box<Category>(HiveKey.category.name).values.any(
           (category) =>
-              category.name[widget.languageCode]!.toLowerCase() ==
+              category
+                      .name[category.base
+                          ? context.locale.languageCode
+                          : 'custom']!
+                      .toLowerCase() ==
                   text.trim().toLowerCase() &&
               (widget.category?.uuid != null
                   ? category.uuid != widget.category!.uuid
@@ -55,8 +52,8 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
         return null;
       },
     );
-    if (widget.category?.words[widget.languageCode] != null) {
-      _words.addAll(widget.category!.words[widget.languageCode]!);
+    if (widget.category?.words['custom'] != null) {
+      _words.addAll(widget.category!.words['custom']!);
     }
   }
 

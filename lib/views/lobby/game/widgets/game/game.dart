@@ -80,14 +80,20 @@ class _GameState extends State<Game> {
   _setRandomWord() {
     final randomCategoryNumber = Random().nextInt(widget.categories.length);
     final randomCategory = widget.categories[randomCategoryNumber];
+
     int randomWordNumber = Random().nextInt(
-      randomCategory.words[widget.languageCode]?.length ?? -1,
+      randomCategory
+              .words[randomCategory.base ? widget.languageCode : 'custom']
+              ?.length ??
+          -1,
     );
     if (randomWordNumber < 0) {
       _setRandomWord();
     } else {
       String newWord =
-          randomCategory.words[widget.languageCode]![randomWordNumber];
+          randomCategory.words[randomCategory.base
+              ? widget.languageCode
+              : 'custom']![randomWordNumber];
       if (newWord == _currentWord) {
         _setRandomWord();
       } else {
@@ -107,7 +113,10 @@ class _GameState extends State<Game> {
         GameStage.cards => CardsStage(
           key: GlobalKey(),
           word: _currentWord,
-          categoryName: _currentCategory.name[widget.languageCode]!,
+          categoryName:
+              _currentCategory.name[_currentCategory.base
+                  ? widget.languageCode
+                  : 'custom']!,
           imposterIndices: _imposterIndices,
           imposterSeesCategoryName: widget.group.imposterSeesCategoryName,
           shuffledPlayers: _shuffledPlayers,

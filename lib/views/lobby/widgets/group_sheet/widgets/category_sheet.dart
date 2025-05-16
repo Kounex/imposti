@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:imposti/models/category/category.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/models/hive_adapters.dart';
-import 'package:imposti/widgets/shared/custom_category_sheet/category_section.dart';
+import 'package:imposti/widgets/shared/category_section.dart';
 import 'package:imposti/widgets/shared/custom_category_sheet/service.dart';
 
 import '../../../../../widgets/builder/hive_builder.dart';
@@ -71,11 +71,7 @@ class _CategorySheetState extends State<CategorySheet> {
                 hiveKey: HiveKey.category,
                 builder: (context, categoryBox, child) {
                   Iterable<Category> customCategories = categoryBox.values
-                      .where(
-                        (category) =>
-                            !category.base &&
-                            category.words[context.locale.languageCode] != null,
-                      );
+                      .where((category) => !category.base);
 
                   return ListView(
                     children: [
