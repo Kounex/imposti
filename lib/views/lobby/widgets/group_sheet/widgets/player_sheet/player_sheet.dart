@@ -59,7 +59,7 @@ class _PlayerSheetState extends State<PlayerSheet> {
     context,
     PlayerDialog(
       player: player,
-      otherPlayers: _players..remove(player),
+      otherPlayers: [..._players]..remove(player),
       onDelete: () => _handlePlayerDialogDelete(player),
       onSave: (text) => _handlePlayerDialogSave(text, player),
     ),
