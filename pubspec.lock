@@ -70,7 +70,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: ebb0a574909e8d48e68bd4d7fb1845a6e22c1a85
+      resolved-ref: a6f550a60fa7742cf549c11cb1993f43caba484f
       url: "https://github.com/Kounex/base_components.git"
     source: git
     version: "1.0.0"
@@ -698,10 +698,10 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_purchase
-      sha256: "50004f9e4392deabc7e2585587c38aed4d08d782869cb31c610b657c9a43207b"
+      sha256: "5cddd7f463f3bddb1d37a72b95066e840d5822d66291331d7f8f05ce32c24b6c"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.3"
   in_app_purchase_android:
     dependency: transitive
     description:
@@ -722,10 +722,10 @@ packages:
     dependency: transitive
     description:
       name: in_app_purchase_storekit
-      sha256: "6ce1361278cacc0481508989ba419b2c9f46a2b0dc54b3fe54f5ee63c2718fef"
+      sha256: "02f08d5688fc2776e3e386ff7d3071b7b375ea8222e8e6bd027b15c0708e4045"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.22+1"
+    version: "0.4.0"
   in_app_review:
     dependency: "direct main"
     description:
