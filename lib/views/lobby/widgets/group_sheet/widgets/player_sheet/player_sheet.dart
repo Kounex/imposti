@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/widgets/player_sheet/player_dialog.dart';
+import 'package:imposti/widgets/ui/sheet.dart';
 
 class PlayerSheet extends StatefulWidget {
   final Group group;
@@ -66,92 +67,62 @@ class _PlayerSheetState extends State<PlayerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding:
-            EdgeInsets.all(DesignSystem.spacing.x24) +
-            EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
-
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'gPlayer'.plural(2),
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  Text('lobbyPlayerListDescription'.tr()),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  BaseCard(
-                    topPadding: 0,
-                    leftPadding: 0,
-                    rightPadding: 0,
-                    bottomPadding: 0,
-                    constrained: false,
-                    paddingChild: EdgeInsets.zero,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: DesignSystem.size.x256,
+    return BaseSheet(
+      onAction: () {
+        widget.onSave(_players);
+        Navigator.of(context).pop();
+      },
+      title: 'gPlayer'.plural(2),
+      children: [
+        Text('lobbyPlayerListDescription'.tr()),
+        SizedBox(height: DesignSystem.spacing.x24),
+        BaseCard(
+          topPadding: 0,
+          leftPadding: 0,
+          rightPadding: 0,
+          bottomPadding: 0,
+          constrained: false,
+          paddingChild: EdgeInsets.zero,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: DesignSystem.size.x256),
+            child: switch (_players.isEmpty) {
+              true => Padding(
+                padding: EdgeInsets.all(DesignSystem.spacing.x16),
+                child: BasePlaceholder(text: 'lobbyPlayerListEmpty'.tr()),
+              ),
+              false => Scrollbar(
+                controller: _controller,
+                thumbVisibility: true,
+                child: ListView(
+                  controller: _controller,
+                  shrinkWrap: true,
+                  children: List.from(
+                    _players.map(
+                      (player) => ListTile(
+                        onTap: () => _handlePlayerTap(player),
+                        title: Text(player),
+                        trailing: Icon(Icons.edit),
                       ),
-                      child: switch (_players.isEmpty) {
-                        true => Padding(
-                          padding: EdgeInsets.all(DesignSystem.spacing.x16),
-                          child: BasePlaceholder(
-                            text: 'lobbyPlayerListEmpty'.tr(),
-                          ),
-                        ),
-                        false => Scrollbar(
-                          controller: _controller,
-                          thumbVisibility: true,
-                          child: ListView(
-                            controller: _controller,
-                            shrinkWrap: true,
-                            children: List.from(
-                              _players.map(
-                                (player) => ListTile(
-                                  onTap: () => _handlePlayerTap(player),
-                                  title: Text(player),
-                                  trailing: Icon(Icons.edit),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      },
                     ),
                   ),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  CupertinoButton.filled(
-                    onPressed:
-                        () => ModalUtils.showBaseDialog(
-                          context,
-                          PlayerDialog(
-                            otherPlayers: _players,
-                            onSave: (text) => _handlePlayerDialogSave(text),
-                          ),
-                        ),
-                    child: Text('lobbyBtnNewPlayer'.tr()),
-                  ),
-                ],
+                ),
               ),
-            ),
-            SizedBox(height: DesignSystem.spacing.x24),
-            SizedBox(
-              width: double.infinity,
-              child: CupertinoButton.filled(
-                onPressed: () {
-                  widget.onSave(_players);
-                  Navigator.of(context).pop();
-                },
-                child: Text('gSave'.tr()),
-              ),
-            ),
-          ],
+            },
+          ),
         ),
-      ),
+        SizedBox(height: DesignSystem.spacing.x24),
+        CupertinoButton.filled(
+          onPressed:
+              () => ModalUtils.showBaseDialog(
+                context,
+                PlayerDialog(
+                  otherPlayers: _players,
+                  onSave: (text) => _handlePlayerDialogSave(text),
+                ),
+              ),
+          child: Text('lobbyBtnNewPlayer'.tr()),
+        ),
+      ],
     );
   }
 }

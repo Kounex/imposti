@@ -10,6 +10,7 @@ import 'package:imposti/router/routes.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/widgets/category_sheet.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/widgets/imposter_sheet.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/widgets/player_sheet/player_sheet.dart';
+import 'package:imposti/widgets/ui/sheet.dart';
 import 'package:uuid/v4.dart';
 
 import '../../../../models/category/category.dart';
@@ -119,7 +120,7 @@ class _GroupSheetState extends State<GroupSheet> {
     return amount;
   }
 
-  Future<void> _deleteGroup() async {
+  void _deleteGroup() {
     ModalUtils.showBaseDialog(
       context,
       BaseConfirmationDialog(
@@ -128,9 +129,11 @@ class _GroupSheetState extends State<GroupSheet> {
         noText: 'gNo'.tr(),
         yesText: 'gYes'.tr(),
         isYesDestructive: true,
-        onYes: (_) {
-          widget.group!.delete();
-          Navigator.of(context).pop();
+        onYes: (_) async {
+          await widget.group!.delete();
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
         },
       ),
     );
@@ -153,134 +156,95 @@ class _GroupSheetState extends State<GroupSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding:
-            EdgeInsets.all(DesignSystem.spacing.x24) +
-            EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'gGroup'.plural(1),
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            Expanded(
-              child: ListView(
+    return BaseSheet(
+      onAction: _saveGroupAndStart,
+      onDelete: widget.group != null ? _deleteGroup : null,
+      title: 'gGroup'.plural(1),
+      actionText: 'lobbyBtnStart'.tr(),
+      children: [
+        BaseCupertinoListSection(
+          tiles: [
+            BaseCupertinoListTile(
+              onTap: _handlePlayerTile,
+              leadingIcon: CupertinoIcons.person_solid,
+              additionalInfo: Row(
                 children: [
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  BaseCupertinoListSection(
-                    tiles: [
-                      BaseCupertinoListTile(
-                        onTap: _handlePlayerTile,
-                        leadingIcon: CupertinoIcons.person_solid,
-                        additionalInfo: Row(
-                          children: [
-                            Text('${_group.players.length}'),
-                            CupertinoListTileChevron(),
-                          ],
-                        ),
-                        title: Text('gPlayer'.plural(2)),
-                        subtitle:
-                            _group.players.isNotEmpty
-                                ? Text(
-                                  _group.players
-                                      .skip(1)
-                                      .fold(
-                                        _group.players.first,
-                                        (prev, curr) => '$prev, $curr',
-                                      ),
-                                )
-                                : null,
-                      ),
-                      BaseCupertinoListTile(
-                        onTap: _handleImposterTile,
-                        leadingIcon: Icons.android,
-                        leadingIconBackgroundColor: Colors.red,
-                        title: Text('lobbyAmountImpostersTitle'.tr()),
-                        additionalInfo: Row(
-                          children: [
-                            Text(_amountImpostersString()),
-                            CupertinoListTileChevron(),
-                          ],
-                        ),
-                      ),
-                      BaseCupertinoListTile(
-                        onTap: _handleCategoryTile,
-                        leadingIcon: Icons.category,
-                        leadingIconBackgroundColor: Colors.green,
-                        title: Text('gCategory'.plural(2)),
-                        subtitle:
-                            _group.categoryUuids.isNotEmpty
-                                ? Text(_getCategoryNames())
-                                : null,
-                        additionalInfo: Row(
-                          children: [
-                            Text('${_group.categoryUuids.length}'),
-                            CupertinoListTileChevron(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  BaseCupertinoListSection(
-                    tiles: [
-                      BaseCupertinoListTile(
-                        title: Row(
-                          children: [
-                            Text('lobbyImposterSeesCategory'.tr()),
-                            SizedBox(width: DesignSystem.spacing.x12),
-                            QuestionMarkTooltip(
-                              message: 'lobbyImposterSeesCategoryHelp'.tr(),
+                  Text('${_group.players.length}'),
+                  CupertinoListTileChevron(),
+                ],
+              ),
+              title: Text('gPlayer'.plural(2)),
+              subtitle:
+                  _group.players.isNotEmpty
+                      ? Text(
+                        _group.players
+                            .skip(1)
+                            .fold(
+                              _group.players.first,
+                              (prev, curr) => '$prev, $curr',
                             ),
-                          ],
-                        ),
-                        leadingIcon: CupertinoIcons.search,
-                        leadingIconBackgroundColor: Colors.orange,
-                        additionalInfo: BaseAdaptiveSwitch(
-                          value: _group.imposterSeesCategoryName,
-                          onChanged:
-                              (change) => setState(
-                                () =>
-                                    _group = _group.copyWith(
-                                      imposterSeesCategoryName: change,
-                                    ),
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
+                      )
+                      : null,
+            ),
+            BaseCupertinoListTile(
+              onTap: _handleImposterTile,
+              leadingIcon: Icons.android,
+              leadingIconBackgroundColor: Colors.red,
+              title: Text('lobbyAmountImpostersTitle'.tr()),
+              additionalInfo: Row(
+                children: [
+                  Text(_amountImpostersString()),
+                  CupertinoListTileChevron(),
                 ],
               ),
             ),
-            SizedBox(height: DesignSystem.spacing.x24),
-            if (widget.group != null) ...[
-              SizedBox(
-                width: double.infinity,
-                child: CupertinoButton(
-                  onPressed: _deleteGroup,
-                  color: Theme.of(context).colorScheme.error,
-                  child: Text(
-                    'gDelete'.tr(),
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onError,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: DesignSystem.spacing.x24),
-            ],
-            SizedBox(
-              width: double.infinity,
-              child: CupertinoButton.filled(
-                onPressed: _saveGroupAndStart,
-                child: Text('lobbyBtnStart'.tr()),
+            BaseCupertinoListTile(
+              onTap: _handleCategoryTile,
+              leadingIcon: Icons.category,
+              leadingIconBackgroundColor: Colors.green,
+              title: Text('gCategory'.plural(2)),
+              subtitle:
+                  _group.categoryUuids.isNotEmpty
+                      ? Text(_getCategoryNames())
+                      : null,
+              additionalInfo: Row(
+                children: [
+                  Text('${_group.categoryUuids.length}'),
+                  CupertinoListTileChevron(),
+                ],
               ),
             ),
           ],
         ),
-      ),
+        SizedBox(height: DesignSystem.spacing.x24),
+        BaseCupertinoListSection(
+          tiles: [
+            BaseCupertinoListTile(
+              title: Row(
+                children: [
+                  Text('lobbyImposterSeesCategory'.tr()),
+                  SizedBox(width: DesignSystem.spacing.x12),
+                  QuestionMarkTooltip(
+                    message: 'lobbyImposterSeesCategoryHelp'.tr(),
+                  ),
+                ],
+              ),
+              leadingIcon: CupertinoIcons.search,
+              leadingIconBackgroundColor: Colors.orange,
+              additionalInfo: BaseAdaptiveSwitch(
+                value: _group.imposterSeesCategoryName,
+                onChanged:
+                    (change) => setState(
+                      () =>
+                          _group = _group.copyWith(
+                            imposterSeesCategoryName: change,
+                          ),
+                    ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

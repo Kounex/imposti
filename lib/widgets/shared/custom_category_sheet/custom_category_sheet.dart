@@ -7,6 +7,7 @@ import 'package:imposti/models/category/category.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/models/hive_adapters.dart';
 import 'package:imposti/widgets/shared/custom_category_sheet/word_dialog.dart';
+import 'package:imposti/widgets/ui/sheet.dart';
 
 class CustomCategorySheet extends StatefulWidget {
   final Category? category;
@@ -138,126 +139,82 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding:
-            EdgeInsets.all(DesignSystem.spacing.x24) +
-            EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
-
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'sharedCustomCategoryTitle'.tr(),
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  Text('sharedCustomCategoryNameDescription'.tr()),
-                  SizedBox(height: DesignSystem.spacing.x8),
-                  BaseAdaptiveTextField(
-                    controller: _name,
-                    placeholder: 'Name',
-                    clearButton: true,
-                  ),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  Text('sharedCustomCategoryWordsDescription'.tr()),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  BaseCard(
-                    topPadding: 0,
-                    leftPadding: 0,
-                    rightPadding: 0,
-                    bottomPadding: 0,
-                    constrained: false,
-                    paintBorder: _name.submitted && _words.isEmpty,
-                    borderColor: Theme.of(context).colorScheme.error,
-                    paddingChild: EdgeInsets.zero,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: DesignSystem.size.x256,
-                      ),
-                      child: switch (_words.isEmpty) {
-                        true => Padding(
-                          padding: EdgeInsets.all(DesignSystem.spacing.x16),
-                          child: BasePlaceholder(
-                            text: 'sharedCustomCategoryWordsCardEmpty'.tr(),
-                          ),
-                        ),
-                        false => Scrollbar(
-                          controller: _controller,
-                          thumbVisibility: true,
-                          child: ListView(
-                            controller: _controller,
-                            shrinkWrap: true,
-                            children: List.from(
-                              _words.map(
-                                (word) => ListTile(
-                                  onTap: () => _handleWordTap(word),
-                                  title: Text(word),
-                                  trailing: Icon(Icons.edit),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      },
-                    ),
-                  ),
-                  if (_name.submitted && _words.isEmpty) ...[
-                    SizedBox(height: DesignSystem.spacing.x8),
-                    Fader(
-                      child: Text(
-                        'sharedInputDialogRequiredError'.tr(),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                      ),
-                    ),
-                  ],
-                  SizedBox(height: DesignSystem.spacing.x24),
-                  CupertinoButton.filled(
-                    onPressed: _handleNewWord,
-                    child: Text('sharedCustomCategoryBtnNewWord'.tr()),
-                  ),
-                ],
+    return BaseSheet(
+      onDelete: widget.category != null ? _deleteCategory : null,
+      onAction: () {
+        setState(() {});
+        if (_name.isValid && _words.isNotEmpty) {
+          widget.onSave(_name.textAtSubmission.trim(), _words);
+          Navigator.of(context).pop();
+        }
+      },
+      title: 'sharedCustomCategoryTitle'.tr(),
+      children: [
+        Text('sharedCustomCategoryNameDescription'.tr()),
+        SizedBox(height: DesignSystem.spacing.x8),
+        BaseAdaptiveTextField(
+          controller: _name,
+          placeholder: 'Name',
+          clearButton: true,
+        ),
+        SizedBox(height: DesignSystem.spacing.x24),
+        Text('sharedCustomCategoryWordsDescription'.tr()),
+        SizedBox(height: DesignSystem.spacing.x24),
+        BaseCard(
+          topPadding: 0,
+          leftPadding: 0,
+          rightPadding: 0,
+          bottomPadding: 0,
+          constrained: false,
+          paintBorder: _name.submitted && _words.isEmpty,
+          borderColor: Theme.of(context).colorScheme.error,
+          paddingChild: EdgeInsets.zero,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: DesignSystem.size.x256),
+            child: switch (_words.isEmpty) {
+              true => Padding(
+                padding: EdgeInsets.all(DesignSystem.spacing.x16),
+                child: BasePlaceholder(
+                  text: 'sharedCustomCategoryWordsCardEmpty'.tr(),
+                ),
               ),
-            ),
-
-            SizedBox(height: DesignSystem.spacing.x24),
-            if (widget.category != null) ...[
-              SizedBox(
-                width: double.infinity,
-                child: CupertinoButton(
-                  onPressed: _deleteCategory,
-                  color: Theme.of(context).colorScheme.error,
-                  child: Text(
-                    'gDelete'.tr(),
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onError,
+              false => Scrollbar(
+                controller: _controller,
+                thumbVisibility: true,
+                child: ListView(
+                  controller: _controller,
+                  shrinkWrap: true,
+                  children: List.from(
+                    _words.map(
+                      (word) => ListTile(
+                        onTap: () => _handleWordTap(word),
+                        title: Text(word),
+                        trailing: Icon(Icons.edit),
+                      ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: DesignSystem.spacing.x24),
-            ],
-            SizedBox(
-              width: double.infinity,
-              child: CupertinoButton.filled(
-                onPressed: () {
-                  setState(() {});
-                  if (_name.isValid && _words.isNotEmpty) {
-                    widget.onSave(_name.textAtSubmission.trim(), _words);
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Text('gSave'.tr()),
+            },
+          ),
+        ),
+        if (_name.submitted && _words.isEmpty) ...[
+          SizedBox(height: DesignSystem.spacing.x8),
+          Fader(
+            child: Text(
+              'sharedInputDialogRequiredError'.tr(),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.error,
               ),
             ),
-          ],
+          ),
+        ],
+        SizedBox(height: DesignSystem.spacing.x24),
+        CupertinoButton.filled(
+          onPressed: _handleNewWord,
+          child: Text('sharedCustomCategoryBtnNewWord'.tr()),
         ),
-      ),
+      ],
     );
   }
 }
