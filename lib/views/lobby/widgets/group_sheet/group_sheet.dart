@@ -187,10 +187,12 @@ class _GroupSheetState extends State<GroupSheet> {
       title: 'gGroup'.plural(1),
       actionText: 'lobbyBtnStart'.tr(),
       children: [
+        Text('lobbyGroupNameDescription'.tr()),
+        SizedBox(height: DesignSystem.spacing.x8),
         BaseAdaptiveTextField(
           controller: _name,
           clearButton: true,
-          placeholder: 'lobbyGroupNamePlaceholder'.tr(),
+          placeholder: '(${'gOptional'.tr()}) ${'gName'.tr()}',
         ),
         SizedBox(height: DesignSystem.spacing.x24),
         BaseCupertinoListSection(
