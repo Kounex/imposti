@@ -27,6 +27,7 @@
     "gDelete": "Delete",
     "gCancel": "Cancel",
     "gAdd": "Add",
+    "gEdit": "Edit",
     "gImposter": {
         "one": "Imposter",
         "two": "Imposters"
@@ -62,7 +63,10 @@
     "gameDialogExitGameBody": "Are you sure you want to end the game?",
     "gamePlayDescription": "Ready to reveal the imposters?",
     "gamePlayBtnReveal": "Reveal",
-    "gameRevealDescription": "Have you guessed the right persons?",
+    "gameRevealDescription": {
+        "one": "was the imposter!\nWere you able to expose them?!",
+        "two": "were the imposters!\nWere you able to expose them?!"
+    },
     "gameRevealBtnAnotherRound": "New round",
     "gGame": "Game",
     "gOptional": "Optional",
@@ -77,7 +81,7 @@
     "settingsRateApp": "Rate the App",
     "settingsDonate": "Donate",
     "settingsDonateDescription": "First off: the app is 100% free and Open Source! There is no need to pay for anything! Keeping this app in the stores costs me some money though, so if you enjoy this app or another of mine and want to support me, this is the easiest way to do so! :)",
-    "settingsGitHubHelp": "The app is open source! What does this mean? Well, you can look at the complete code which is powering this app, learn from it, play around with it and co.!",
+    "settingsGitHubHelp": "The app is open source! What does this mean? Well, you can look at the complete code which is powering this app, understand it, contribute or build it on your own!",
     "settingsGitDialogTitle": "Open GitHub?",
     "settingsGitDialogDescription": "Do you want to go to GitHub?"
 }

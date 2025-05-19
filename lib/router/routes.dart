@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:imposti/views/intro/intro.dart';
 import 'package:imposti/views/lobby/game/game.dart';
 import 'package:imposti/views/lobby/lobby.dart';
-import 'package:imposti/views/tabs/settings/custom_categories/custom_categories.dart';
+import 'package:imposti/views/shared/custom_categories/custom_categories.dart';
 
 import '../views/tabs/dashboard/dashboard.dart';
 import '../views/tabs/settings/settings.dart';
@@ -21,12 +21,14 @@ abstract class BaseRoute {
 enum AppRoute implements BaseRoute {
   intro,
   lobby,
+  lobbyCustomCategories,
   game;
 
   @override
   bool get isRoot => switch (this) {
     AppRoute.intro => true,
     AppRoute.lobby => false,
+    AppRoute.lobbyCustomCategories => false,
     AppRoute.game => false,
   };
 
@@ -34,6 +36,7 @@ enum AppRoute implements BaseRoute {
   String get fullPath => switch (this) {
     AppRoute.intro => '/intro',
     AppRoute.lobby => '/lobby',
+    AppRoute.lobbyCustomCategories => '/lobby/custom-categories',
     AppRoute.game => '/game/:groupUuid',
   };
 
@@ -41,6 +44,7 @@ enum AppRoute implements BaseRoute {
   String get name => switch (this) {
     AppRoute.intro => 'Intro',
     AppRoute.lobby => 'Lobby',
+    AppRoute.lobbyCustomCategories => 'Custom Categories',
     AppRoute.game => 'Game',
   };
 
@@ -48,6 +52,7 @@ enum AppRoute implements BaseRoute {
   IconData? get icon => switch (this) {
     AppRoute.intro => null,
     AppRoute.lobby => null,
+    AppRoute.lobbyCustomCategories => null,
     AppRoute.game => null,
   };
 
@@ -55,6 +60,7 @@ enum AppRoute implements BaseRoute {
   RouterStatefulView view(GoRouterState state) => switch (this) {
     AppRoute.intro => const IntroView(),
     AppRoute.lobby => const LobbyView(),
+    AppRoute.lobbyCustomCategories => const CustomCategoriesView(),
     AppRoute.game => GameView(data: GameViewData(state: state)),
   };
 }

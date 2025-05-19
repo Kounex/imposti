@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:imposti/models/category/category.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/models/hive_adapters.dart';
+import 'package:imposti/router/router.dart';
+import 'package:imposti/router/routes.dart';
 import 'package:imposti/widgets/shared/category_section.dart';
-import 'package:imposti/widgets/shared/custom_category_sheet/service.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
 import '../../../../../widgets/builder/hive_builder.dart';
@@ -80,10 +81,14 @@ class _CategorySheetState extends State<CategorySheet> {
               children: [
                 Text('lobbyCategoryListOwnDescription'.tr()),
                 CupertinoButton(
-                  onPressed: () => CustomCategoryService.addEditSheet(context),
+                  onPressed:
+                      () => BaseAppRouter().navigateTo(
+                        context,
+                        AppRoute.lobbyCustomCategories,
+                      ),
                   padding: EdgeInsets.zero,
                   minSize: DesignSystem.size.x18,
-                  child: Text('gAdd'.tr()),
+                  child: Text('gEdit'.tr()),
                 ),
               ],
             ),

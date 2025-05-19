@@ -6,11 +6,11 @@ import 'package:imposti/models/category/category.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/views/lobby/game/widgets/game/cards_stage/cards_stage.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/play_stage.dart';
-import 'package:imposti/views/lobby/game/widgets/game/reveal_stage.dart';
+import 'package:imposti/views/lobby/game/widgets/game/resolution_stage.dart';
 
 import '../../../../../utils/prots.dart';
 
-enum GameStage { cards, play, reveal }
+enum GameStage { cards, play, resolution }
 
 class Game extends StatefulWidget {
   final Group group;
@@ -32,6 +32,8 @@ class Game extends StatefulWidget {
 class _GameState extends State<Game> {
   GameStage _stage = GameStage.cards;
 
+  late List<Category> _categories;
+
   String _currentWord = '';
   late Category _currentCategory;
 
@@ -43,6 +45,8 @@ class _GameState extends State<Game> {
   void initState() {
     super.initState();
 
+    _setCopiedCategories();
+
     _initGame();
   }
 
@@ -51,6 +55,22 @@ class _GameState extends State<Game> {
     _setShuffledProts();
     _setImposterPlayerIndices();
     _setRandomWord();
+  }
+
+  /// We make a copy of our categories so we can mutate it which will allow
+  /// us to remove played words so we go through all of them without repetition.
+  /// Once we played through all words of the selected categories we will reset
+  /// our local copy again
+  void _setCopiedCategories() {
+    _categories = [
+      ...widget.categories.map(
+        (category) => category.copyWith(
+          words: {
+            ...category.words.map((key, value) => MapEntry(key, [...value])),
+          },
+        ),
+      ),
+    ];
   }
 
   void _setShuffledProts() {
@@ -78,29 +98,37 @@ class _GameState extends State<Game> {
   }
 
   _setRandomWord() {
-    final randomCategoryNumber = Random().nextInt(widget.categories.length);
-    final randomCategory = widget.categories[randomCategoryNumber];
+    /// Check if we played through all available words -> reset our local
+    /// copy then
+    if (_categories.isEmpty) {
+      _setCopiedCategories();
+    }
+
+    final randomCategoryNumber = Random().nextInt(_categories.length);
+    final randomCategory = _categories[randomCategoryNumber];
 
     int randomWordNumber = Random().nextInt(
       randomCategory
-              .words[randomCategory.base ? widget.languageCode : 'custom']
-              ?.length ??
-          -1,
+          .words[randomCategory.base ? widget.languageCode : 'custom']!
+          .length,
     );
-    if (randomWordNumber < 0) {
-      _setRandomWord();
-    } else {
-      String newWord =
-          randomCategory.words[randomCategory.base
-              ? widget.languageCode
-              : 'custom']![randomWordNumber];
-      if (newWord == _currentWord) {
-        _setRandomWord();
-      } else {
-        _currentWord = newWord;
-        _currentCategory = randomCategory;
-      }
+
+    /// When retrieving the next random word, we remove it from our local copy
+    /// of the category so we will naturally play through them
+    String newWord = randomCategory
+        .words[randomCategory.base ? widget.languageCode : 'custom']!
+        .removeAt(randomWordNumber);
+
+    /// Check if the category we used the word from is now empty, remove it
+    /// from our local copy of categories then
+    if (randomCategory
+        .words[randomCategory.base ? widget.languageCode : 'custom']!
+        .isEmpty) {
+      _categories.remove(randomCategory);
     }
+
+    _currentWord = newWord;
+    _currentCategory = randomCategory;
   }
 
   @override
@@ -119,15 +147,18 @@ class _GameState extends State<Game> {
                   : 'custom']!,
           imposterIndices: _imposterIndices,
           imposterSeesCategoryName: widget.group.imposterSeesCategoryName,
-          shuffledPlayers: _shuffledPlayers,
-          shuffledProts: _shuffledProts,
+          players: _shuffledPlayers,
+          prots: _shuffledProts,
           onStageDone: () => setState(() => _stage = GameStage.play),
         ),
+
         GameStage.play => PlayStage(
           key: GlobalKey(),
-          onStageDone: () => setState(() => _stage = GameStage.reveal),
+          players: _shuffledPlayers,
+          prots: _shuffledProts,
+          onStageDone: () => setState(() => _stage = GameStage.resolution),
         ),
-        GameStage.reveal => RevealStage(
+        GameStage.resolution => ResolutionStage(
           key: GlobalKey(),
           imposters: List.from(
             _imposterIndices.map((index) => _shuffledPlayers[index]),

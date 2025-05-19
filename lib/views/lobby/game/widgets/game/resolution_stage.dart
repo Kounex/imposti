@@ -2,16 +2,15 @@ import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:imposti/views/lobby/game/widgets/game/player_card%20copy.dart';
 
-import 'cards_stage/player_card.dart';
-
-class RevealStage extends StatefulWidget {
+class ResolutionStage extends StatefulWidget {
   final List<String> imposters;
   final List<String> prots;
 
   final void Function()? onStageDone;
 
-  const RevealStage({
+  const ResolutionStage({
     super.key,
     required this.imposters,
     required this.prots,
@@ -19,18 +18,19 @@ class RevealStage extends StatefulWidget {
   });
 
   @override
-  State<RevealStage> createState() => _RevealStageState();
+  State<ResolutionStage> createState() => _ResolutionStageState();
 }
 
-class _RevealStageState extends State<RevealStage> {
+class _ResolutionStageState extends State<ResolutionStage> {
   final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.sizeOf(context).height / 8),
+          // SizedBox(height: MediaQuery.sizeOf(context).height / 12),
           SizedBox(
             height:
                 (MediaQuery.sizeOf(context).width / 1.5) * 1.25 +
@@ -73,35 +73,33 @@ class _RevealStageState extends State<RevealStage> {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(DesignSystem.spacing.x24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'gameRevealDescription'.tr(),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleLarge?.copyWith(color: Colors.white),
-                  ),
-                  SizedBox(height: DesignSystem.spacing.x32),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: DesignSystem.spacing.x32,
-                    ),
-                    width: double.infinity,
-                    child: CupertinoButton.filled(
-                      onPressed: () => widget.onStageDone?.call(),
-                      child: Text('gameRevealBtnAnotherRound'.tr()),
-                    ),
-                  ),
-                  SizedBox(height: DesignSystem.spacing.x24),
-                ],
+          SizedBox(height: DesignSystem.spacing.x32),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: DesignSystem.spacing.x24 + DesignSystem.spacing.x12,
+            ),
+            child: Text(
+              'gameRevealDescription'.plural(widget.imposters.length),
+              textAlign: TextAlign.center,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(height: DesignSystem.spacing.x48),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: DesignSystem.spacing.x24 + DesignSystem.spacing.x12,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: CupertinoButton.filled(
+                onPressed: () => widget.onStageDone?.call(),
+                child: Text('gameRevealBtnAnotherRound'.tr()),
               ),
             ),
           ),
+          // SizedBox(height: MediaQuery.sizeOf(context).height / 24),
         ],
       ),
     );

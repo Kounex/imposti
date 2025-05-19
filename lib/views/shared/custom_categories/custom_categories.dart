@@ -6,9 +6,9 @@ import 'package:imposti/router/view.dart';
 import 'package:imposti/widgets/shared/custom_category_sheet/service.dart';
 import 'package:imposti/widgets/ui/imposti_scaffold.dart';
 
-import '../../../../models/category/category.dart';
-import '../../../../models/hive_adapters.dart';
-import '../../../../widgets/builder/hive_builder.dart';
+import '../../../models/category/category.dart';
+import '../../../models/hive_adapters.dart';
+import '../../../widgets/builder/hive_builder.dart';
 
 class CustomCategoriesView extends RouterStatefulView {
   const CustomCategoriesView({super.key});

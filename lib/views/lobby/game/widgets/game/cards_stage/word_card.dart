@@ -3,7 +3,8 @@ import 'package:base_components/base_components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:imposti/views/lobby/game/widgets/game/cards_stage/player_card.dart';
+import 'package:imposti/views/lobby/game/widgets/game/play_card.dart';
+import 'package:imposti/views/lobby/game/widgets/game/player_card%20copy.dart';
 
 class WordCard extends StatefulWidget {
   final String player;
@@ -103,7 +104,7 @@ class _WordCardState extends State<WordCard>
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              PlayerCard(
+              PlayCard(
                 children: [
                   Positioned(
                     top: DesignSystem.spacing.x64,
@@ -159,12 +160,7 @@ class _WordCardState extends State<WordCard>
                   );
                 },
               ),
-              Card(
-                color: Colors.transparent,
-                margin: EdgeInsets.zero,
-                clipBehavior: Clip.hardEdge,
-                child: SizedBox.expand(),
-              ),
+              PlayCard(color: Colors.transparent, child: SizedBox.expand()),
             ],
           ),
         ),

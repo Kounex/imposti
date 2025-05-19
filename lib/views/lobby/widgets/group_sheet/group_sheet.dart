@@ -75,10 +75,10 @@ class _GroupSheetState extends State<GroupSheet> {
       if (_name.textAtSubmission.trim().isNotEmpty) {
         _group = _group.copyWith(name: _name.textAtSubmission);
       }
-      if (widget.group != null && widget.group!.isInBox) {
+      if (widget.group != null) {
         await Hive.box<Group>(
           HiveKey.group.name,
-        ).put(widget.group!.key, _group.copyWith(uuid: widget.group!.uuid));
+        ).put(widget.group!.key, _group);
       } else {
         await Hive.box<Group>(HiveKey.group.name).add(_group);
       }

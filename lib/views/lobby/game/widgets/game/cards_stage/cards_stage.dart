@@ -4,11 +4,12 @@ import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:imposti/views/lobby/game/widgets/game/cards_stage/word_card.dart';
+
+import 'word_card.dart';
 
 class CardsStage extends StatefulWidget {
-  final List<String> shuffledPlayers;
-  final List<String> shuffledProts;
+  final List<String> players;
+  final List<String> prots;
   final List<int> imposterIndices;
   final String word;
   final String categoryName;
@@ -19,8 +20,8 @@ class CardsStage extends StatefulWidget {
   const CardsStage({
     super.key,
     this.onStageDone,
-    required this.shuffledPlayers,
-    required this.shuffledProts,
+    required this.players,
+    required this.prots,
     required this.imposterIndices,
     required this.word,
     required this.categoryName,
@@ -38,7 +39,7 @@ class _CardsStageState extends State<CardsStage> {
   int? _lastRevealedCardIndex;
 
   bool _isAtLastPlayer() =>
-      (_controller.page ?? 0).round() >= widget.shuffledPlayers.length - 1;
+      (_controller.page ?? 0).round() >= widget.players.length - 1;
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +61,12 @@ class _CardsStageState extends State<CardsStage> {
                   controller: _controller,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
-                    for (final (index, player)
-                        in widget.shuffledPlayers.indexed)
+                    for (final (index, player) in widget.players.indexed)
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: DesignSystem.spacing.x24,
+                          horizontal:
+                              DesignSystem.spacing.x24 +
+                              DesignSystem.spacing.x12,
                         ),
                         child: WordCard(
                           onWordFullyRevealed: () {
@@ -78,7 +80,7 @@ class _CardsStageState extends State<CardsStage> {
                                       ? widget.categoryName
                                       : 'Imposter'
                                   : widget.word,
-                          prot: widget.shuffledProts[index],
+                          prot: widget.prots[index],
                           imposter: widget.imposterIndices.contains(index),
                         ),
                       ),
@@ -88,34 +90,37 @@ class _CardsStageState extends State<CardsStage> {
               SizedBox(height: DesignSystem.spacing.x24),
               Builder(
                 builder: (context) {
-                  return Container(
-                    width: double.infinity,
+                  return Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: DesignSystem.spacing.x24,
+                      horizontal:
+                          DesignSystem.spacing.x24 + DesignSystem.spacing.x12,
                     ),
-                    child: CupertinoButton.filled(
-                      onPressed:
-                          _lastRevealedCardIndex ==
-                                  (_controller.page?.ceil() ?? -1)
-                              ? () {
-                                if (!_isAtLastPlayer()) {
-                                  _controller.nextPage(
-                                    duration:
-                                        DesignSystem
-                                            .animation
-                                            .defaultDurationMS250,
-                                    curve: Curves.easeIn,
-                                  );
-                                } else {
-                                  widget.onStageDone?.call();
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: CupertinoButton.filled(
+                        onPressed:
+                            _lastRevealedCardIndex ==
+                                    (_controller.page?.ceil() ?? -1)
+                                ? () {
+                                  if (!_isAtLastPlayer()) {
+                                    _controller.nextPage(
+                                      duration:
+                                          DesignSystem
+                                              .animation
+                                              .defaultDurationMS250,
+                                      curve: Curves.easeIn,
+                                    );
+                                  } else {
+                                    widget.onStageDone?.call();
+                                  }
                                 }
-                              }
-                              : null,
-                      child: Text(
-                        (!_isAtLastPlayer()
-                                ? 'gameBtnNextPlayer'
-                                : 'lobbyBtnStart')
-                            .tr(),
+                                : null,
+                        child: Text(
+                          (!_isAtLastPlayer()
+                                  ? 'gameBtnNextPlayer'
+                                  : 'lobbyBtnStart')
+                              .tr(),
+                        ),
                       ),
                     ),
                   );

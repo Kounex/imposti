@@ -27,6 +27,7 @@
     "gDelete": "Löschen",
     "gCancel": "Abbrechen",
     "gAdd": "Hinzufügen",
+    "gEdit": "Bearbeiten",
     "gImposter": {
         "one": "Imposter",
         "two": "Imposters"
@@ -62,7 +63,10 @@
     "gameDialogExitGameBody": "Sicher, dass du das Spiel beenden willst?",
     "gamePlayDescription": "Bereit die Imposter aufzudecken?",
     "gamePlayBtnReveal": "Aufdecken",
-    "gameRevealDescription": "Habt ihr die richtigen Personen erraten?",
+    "gameRevealDescription": {
+        "one": "war der Imposter!\nKonntet ihr sie entlarven?!",
+        "two": "waren die Imposter!\nKonntet ihr sie entlarven?!"
+    },
     "gameRevealBtnAnotherRound": "Neue Runde",
     "gGame": "Spiel",
     "gOptional": "Optional",
@@ -77,7 +81,7 @@
     "settingsRateApp": "App bewerten",
     "settingsDonate": "Spenden",
     "settingsDonateDescription": "Zunächst einmal: Die App ist 100% kostenlos und Open Source! Du musst für nichts zahlen! Es kostet mich allerdings etwas, diese App in den Stores zu halten. Wenn dir diese oder eine meiner anderen Apps gefällt und du mich unterstützen willst, ist dies der einfachste Weg! :)",
-    "settingsGitHubHelp": "Die App ist Open Source! Was das bedeutet? Du kannst dir den Code der App komplett ansehen, davon lernen, damit selbst rumspielen usw.! Du kannst sogar checken, dass das Spiel nicht manipuliert ist ;)",
+    "settingsGitHubHelp": "Die App ist Open Source! Was das bedeutet? Du kannst dir den Code der App komplett ansehen, verstehen, mitwirken oder selber bauen!",
     "settingsGitDialogTitle": "GitHub öffnen?",
     "settingsGitDialogDescription": "Möchtest du zu GitHub wechseln?"
 }
