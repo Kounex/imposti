@@ -184,7 +184,7 @@ class _PlayStageState extends State<PlayStage> with TickerProviderStateMixin {
                     ).textTheme.displaySmall!.copyWith(color: Colors.white),
                   ),
                   SizedBox(height: DesignSystem.spacing.x8),
-                  Text('startet die Runde!'),
+                  Text('gamePlayStartDescription'.tr()),
                 ],
               ),
             ),

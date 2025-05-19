@@ -61,6 +61,7 @@
     "gameBtnNextPlayer": "Nächster Spieler",
     "gameDialogExitGameTitle": "Spiel beenden?",
     "gameDialogExitGameBody": "Sicher, dass du das Spiel beenden willst?",
+    "gamePlayStartDescription": "startet die Runde!",
     "gamePlayDescription": "Bereit die Imposter aufzudecken?",
     "gamePlayBtnReveal": "Aufdecken",
     "gameRevealDescription": {

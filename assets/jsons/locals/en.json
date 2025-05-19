@@ -61,6 +61,7 @@
     "gameBtnNextPlayer": "Next player",
     "gameDialogExitGameTitle": "End game?",
     "gameDialogExitGameBody": "Are you sure you want to end the game?",
+    "gamePlayStartDescription": "starts the round!",
     "gamePlayDescription": "Ready to reveal the imposters?",
     "gamePlayBtnReveal": "Reveal",
     "gameRevealDescription": {
