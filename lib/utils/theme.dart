@@ -1,5 +1,59 @@
 import 'package:flutter/material.dart';
 
+@immutable
+class ImpostiColors extends ThemeExtension<ImpostiColors> {
+  final Color gradientMainSurface;
+  final Color gradientSecondarySurface;
+
+  final Color gradientMainCard;
+  final Color gradientSecondaryCard;
+
+  const ImpostiColors({
+    required this.gradientMainSurface,
+    required this.gradientSecondarySurface,
+    required this.gradientMainCard,
+    required this.gradientSecondaryCard,
+  });
+
+  @override
+  ImpostiColors copyWith({
+    Color? gradientMainSurface,
+    Color? gradientSecondarySurface,
+    Color? gradientMainCard,
+    Color? gradientSecondaryCard,
+  }) {
+    return ImpostiColors(
+      gradientMainSurface: gradientMainSurface ?? this.gradientMainSurface,
+      gradientSecondarySurface:
+          gradientSecondarySurface ?? this.gradientSecondarySurface,
+      gradientMainCard: gradientMainCard ?? this.gradientMainCard,
+      gradientSecondaryCard:
+          gradientSecondaryCard ?? this.gradientSecondaryCard,
+    );
+  }
+
+  @override
+  ImpostiColors lerp(ImpostiColors? other, double t) {
+    if (other is! ImpostiColors) {
+      return this;
+    }
+    return ImpostiColors(
+      gradientMainSurface:
+          Color.lerp(gradientMainSurface, other.gradientMainSurface, t)!,
+      gradientSecondarySurface:
+          Color.lerp(
+            gradientSecondarySurface,
+            other.gradientSecondarySurface,
+            t,
+          )!,
+      gradientMainCard:
+          Color.lerp(gradientMainCard, other.gradientMainCard, t)!,
+      gradientSecondaryCard:
+          Color.lerp(gradientSecondaryCard, other.gradientSecondaryCard, t)!,
+    );
+  }
+}
+
 class ThemeUtils {
   static final ThemeData impostiLightTheme = ThemeData(
     useMaterial3: true,
@@ -14,6 +68,15 @@ class ThemeUtils {
       error: Color(0xFFDC3545),
       onError: Colors.white,
     ),
+
+    extensions: [
+      ImpostiColors(
+        gradientMainSurface: Color(0xFFE69131),
+        gradientSecondarySurface: Color(0xFF406459),
+        gradientMainCard: Color(0xFFE69131),
+        gradientSecondaryCard: Color(0xFF406459),
+      ),
+    ],
 
     scaffoldBackgroundColor: const Color(0xFFFFFFFF),
 
@@ -165,6 +228,15 @@ class ThemeUtils {
       error: Color(0xFFDC3545),
       onError: Colors.white,
     ),
+
+    extensions: [
+      ImpostiColors(
+        gradientMainSurface: Color(0xFFE69131),
+        gradientSecondarySurface: Color(0xFF406459),
+        gradientMainCard: Color(0xFFE69131),
+        gradientSecondaryCard: Color(0xFF406459),
+      ),
+    ],
 
     scaffoldBackgroundColor: const Color(0xFF1C1C1E),
 

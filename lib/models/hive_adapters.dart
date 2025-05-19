@@ -7,7 +7,7 @@ part 'hive_adapters.g.dart';
 
 enum HiveKey { settings, category, group }
 
-enum HiveSettingsKey { darkMode, languageCode }
+enum HiveSettingsKey { darkMode, languageCode, gradient }
 
 @GenerateAdapters([AdapterSpec<Category>(), AdapterSpec<Group>()])
 // ignore: unused_element

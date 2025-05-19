@@ -23,6 +23,7 @@ class PlayCard extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               GradientBackground(
+                forceGradient: true,
                 colors: [
                   Theme.of(context).colorScheme.primary.darken(70),
                   Colors.black.lighten(15),

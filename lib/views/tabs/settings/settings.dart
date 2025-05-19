@@ -29,7 +29,11 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return HiveBuilder<dynamic>(
       hiveKey: HiveKey.settings,
-      rebuildKeys: [HiveSettingsKey.darkMode, HiveSettingsKey.languageCode],
+      rebuildKeys: [
+        HiveSettingsKey.darkMode,
+        HiveSettingsKey.languageCode,
+        HiveSettingsKey.gradient,
+      ],
       builder: (context, settingsBox, child) {
         return ImpostiScaffold(
           contentVerticalPadding: false,
@@ -79,6 +83,23 @@ class _SettingsViewState extends State<SettingsView> {
                       settingsBox.get(HiveSettingsKey.darkMode.name)
                           ? Colors.white
                           : Colors.black,
+                ),
+                BaseCupertinoListTile(
+                  title: Text('Gradient'),
+                  additionalInfo: BaseAdaptiveSwitch(
+                    value: settingsBox.get(
+                      HiveSettingsKey.gradient.name,
+                      defaultValue: true,
+                    ),
+                    onChanged:
+                        (change) => settingsBox.put(
+                          HiveSettingsKey.gradient.name,
+                          change,
+                        ),
+                  ),
+                  leadingIcon: Icons.gradient,
+                  leadingIconBackgroundColor:
+                      Theme.of(context).colorScheme.primary,
                 ),
                 BaseCupertinoListTile(
                   title: Row(
