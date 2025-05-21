@@ -7,9 +7,10 @@ import 'package:imposti/models/group/group.dart';
 import 'package:imposti/models/hive_adapters.dart';
 import 'package:imposti/router/router.dart';
 import 'package:imposti/router/routes.dart';
-import 'package:imposti/views/lobby/widgets/group_sheet/widgets/category_sheet.dart';
-import 'package:imposti/views/lobby/widgets/group_sheet/widgets/imposter_sheet.dart';
-import 'package:imposti/views/lobby/widgets/group_sheet/widgets/player_sheet/player_sheet.dart';
+import 'package:imposti/views/lobby/widgets/group_sheet/category_sheet.dart';
+import 'package:imposti/views/lobby/widgets/group_sheet/imposter_sheet.dart';
+import 'package:imposti/views/lobby/widgets/group_sheet/play_mode_sheet.dart';
+import 'package:imposti/views/lobby/widgets/group_sheet/player_sheet/player_sheet.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 import 'package:uuid/v4.dart';
 
@@ -116,11 +117,12 @@ class _GroupSheetState extends State<GroupSheet> {
     ImposterSheet(
       group: _group,
       onSave:
-          (minMax) => setState(
+          (group) => setState(
             () =>
                 _group = _group.copyWith(
-                  amountMinImposters: minMax.$1,
-                  amountMaxImposters: minMax.$2,
+                  amountMinImposters: group.amountMinImposters,
+                  amountMaxImposters: group.amountMaxImposters,
+                  zeroImposterMode: group.zeroImposterMode,
                 ),
           ),
     ),
@@ -251,17 +253,11 @@ class _GroupSheetState extends State<GroupSheet> {
         ),
         SizedBox(height: DesignSystem.spacing.x24),
         BaseCupertinoListSection(
+          footerText: 'lobbyImposterSeesCategoryHelp'.tr(),
           tiles: [
             BaseCupertinoListTile(
-              title: Row(
-                children: [
-                  Text('lobbyImposterSeesCategory'.tr()),
-                  SizedBox(width: DesignSystem.spacing.x12),
-                  QuestionMarkTooltip(
-                    message: 'lobbyImposterSeesCategoryHelp'.tr(),
-                  ),
-                ],
-              ),
+              title: Text('lobbyImposterSeesCategory'.tr()),
+
               leadingIcon: CupertinoIcons.search,
               leadingIconBackgroundColor: Colors.orange,
               additionalInfo: BaseAdaptiveSwitch(
@@ -273,6 +269,34 @@ class _GroupSheetState extends State<GroupSheet> {
                             imposterSeesCategoryName: change,
                           ),
                     ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: DesignSystem.spacing.x12),
+        BaseCupertinoListSection(
+          tiles: [
+            BaseCupertinoListTile(
+              onTap:
+                  () => ModalUtils.showExpandedModalBottomSheet(
+                    context,
+                    PlayModeSheet(
+                      group: _group,
+                      onSave:
+                          (group) => setState(
+                            () =>
+                                _group = _group.copyWith(
+                                  mode: group.mode,
+                                  modeTimeSeconds: group.modeTimeSeconds,
+                                  modeTapMinTaps: group.modeTapMinTaps,
+                                  modeTapMaxTaps: group.modeTapMaxTaps,
+                                ),
+                          ),
+                    ),
+                  ),
+              title: Text('lobbyPlayModeTitle'.tr()),
+              additionalInfo: Row(
+                children: [Text(_group.mode.name), CupertinoListTileChevron()],
               ),
             ),
           ],

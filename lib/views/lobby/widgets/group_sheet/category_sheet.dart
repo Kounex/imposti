@@ -10,7 +10,7 @@ import 'package:imposti/router/routes.dart';
 import 'package:imposti/widgets/shared/category_section.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
-import '../../../../../widgets/builder/hive_builder.dart';
+import '../../../../widgets/builder/hive_builder.dart';
 
 class CategorySheet extends StatefulWidget {
   final Group group;

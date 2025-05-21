@@ -70,7 +70,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: a6f550a60fa7742cf549c11cb1993f43caba484f
+      resolved-ref: f440cd04d4615752fbc5f0c534c71555e024325e
       url: "https://github.com/Kounex/base_components.git"
     source: git
     version: "1.0.0"
@@ -318,10 +318,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "27eb0ae77836989a3bc541ce55595e8ceee0992807f14511552a898ddd0d88ac"
+      sha256: "5b236382b47ee411741447c1f1e111459c941ea1b3f2b540dde54c210a3662af"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   dough:
     dependency: "direct main"
     description:

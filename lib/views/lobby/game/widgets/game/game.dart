@@ -78,19 +78,25 @@ class _GameState extends State<Game> {
   }
 
   void _setImposterPlayerIndices() {
-    final indices = List.generate(widget.group.players.length, (i) => i);
-    indices.shuffle();
+    if (widget.group.zeroImposterMode &&
+        widget.group.amountMinImposters > 0 &&
+        Random().nextInt(100) < 5) {
+      _imposterIndices = [];
+    } else {
+      final indices = List.generate(widget.group.players.length, (i) => i);
+      indices.shuffle();
 
-    _imposterIndices = List.from(
-      indices.take(
-        Random().nextInt(
-              widget.group.amountMaxImposters -
-                  widget.group.amountMinImposters +
-                  1,
-            ) +
-            widget.group.amountMinImposters,
-      ),
-    );
+      _imposterIndices = List.from(
+        indices.take(
+          Random().nextInt(
+                widget.group.amountMaxImposters -
+                    widget.group.amountMinImposters +
+                    1,
+              ) +
+              widget.group.amountMinImposters,
+        ),
+      );
+    }
   }
 
   _setShuffledPlayers() {

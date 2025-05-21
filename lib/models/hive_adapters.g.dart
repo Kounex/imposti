@@ -25,13 +25,18 @@ class GroupAdapter extends TypeAdapter<Group> {
       amountMaxImposters: fields[4] == null ? 1 : (fields[4] as num).toInt(),
       categoryUuids: (fields[6] as List).cast<String>(),
       imposterSeesCategoryName: fields[7] == null ? false : fields[7] as bool,
+      zeroImposterMode: fields[8] == null ? false : fields[8] as bool,
+      mode: fields[9] == null ? PlayMode.freestyle : fields[9] as PlayMode,
+      modeTimeSeconds: fields[10] == null ? 60 : (fields[10] as num).toInt(),
+      modeTapMinTaps: fields[11] == null ? 10 : (fields[11] as num).toInt(),
+      modeTapMaxTaps: fields[12] == null ? 30 : (fields[12] as num).toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Group obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.uuid)
       ..writeByte(1)
@@ -45,7 +50,17 @@ class GroupAdapter extends TypeAdapter<Group> {
       ..writeByte(6)
       ..write(obj.categoryUuids)
       ..writeByte(7)
-      ..write(obj.imposterSeesCategoryName);
+      ..write(obj.imposterSeesCategoryName)
+      ..writeByte(8)
+      ..write(obj.zeroImposterMode)
+      ..writeByte(9)
+      ..write(obj.mode)
+      ..writeByte(10)
+      ..write(obj.modeTimeSeconds)
+      ..writeByte(11)
+      ..write(obj.modeTapMinTaps)
+      ..writeByte(12)
+      ..write(obj.modeTapMaxTaps);
   }
 
   @override

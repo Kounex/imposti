@@ -5,7 +5,7 @@ nextTypeId: 3
 types:
   Group:
     typeId: 1
-    nextIndex: 8
+    nextIndex: 13
     fields:
       uuid:
         index: 0
@@ -21,6 +21,16 @@ types:
         index: 6
       imposterSeesCategoryName:
         index: 7
+      zeroImposterMode:
+        index: 8
+      mode:
+        index: 9
+      modeTimeSeconds:
+        index: 10
+      modeTapMinTaps:
+        index: 11
+      modeTapMaxTaps:
+        index: 12
   Category:
     typeId: 2
     nextIndex: 5

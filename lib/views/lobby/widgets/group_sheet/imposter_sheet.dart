@@ -1,16 +1,15 @@
 import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imposti/widgets/ui/count_stepper.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
-import '../../../../../models/group/group.dart';
+import '../../../../models/group/group.dart';
 
 class ImposterSheet extends StatefulWidget {
   final Group group;
 
-  final void Function((int min, int max) minMax) onSave;
+  final void Function(Group group) onSave;
 
   const ImposterSheet({super.key, required this.group, required this.onSave});
 
@@ -21,6 +20,7 @@ class ImposterSheet extends StatefulWidget {
 class _ImposterSheetState extends State<ImposterSheet> {
   late int _amountMinImposters;
   late int _amountMaxImposters;
+  late bool _zeroImposterMode;
 
   @override
   void initState() {
@@ -28,13 +28,22 @@ class _ImposterSheetState extends State<ImposterSheet> {
 
     _amountMinImposters = widget.group.amountMinImposters;
     _amountMaxImposters = widget.group.amountMaxImposters;
+    _zeroImposterMode = widget.group.zeroImposterMode;
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseSheet(
       onAction: () {
-        widget.onSave((_amountMinImposters, _amountMaxImposters));
+        widget.onSave(
+          Group(
+            uuid: '',
+            categoryUuids: [],
+            amountMinImposters: _amountMinImposters,
+            amountMaxImposters: _amountMaxImposters,
+            zeroImposterMode: _zeroImposterMode,
+          ),
+        );
         Navigator.of(context).pop();
       },
       title: 'gImposter'.plural(2),
@@ -42,6 +51,7 @@ class _ImposterSheetState extends State<ImposterSheet> {
         Text('lobbyAmountImpostersDescription'.tr()),
         SizedBox(height: DesignSystem.spacing.x24),
         BaseCupertinoListSection(
+          hasLeading: false,
           tiles: [
             BaseCupertinoListTile(
               title: Text('lobbyAmountImpostersMinText'.tr()),
@@ -61,6 +71,7 @@ class _ImposterSheetState extends State<ImposterSheet> {
         ),
         SizedBox(height: DesignSystem.spacing.x24),
         BaseCupertinoListSection(
+          hasLeading: false,
           tiles: [
             BaseCupertinoListTile(
               title: Text('lobbyAmountImpostersMaxText'.tr()),
@@ -73,6 +84,22 @@ class _ImposterSheetState extends State<ImposterSheet> {
                 onIncrement:
                     _amountMaxImposters < widget.group.players.length
                         ? () => setState(() => _amountMaxImposters++)
+                        : null,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: DesignSystem.spacing.x24),
+        BaseCupertinoListSection(
+          footerText: 'lobbyImposterZeroHelp'.tr(),
+          tiles: [
+            BaseCupertinoListTile(
+              title: Text('lobbyImposterZeroTitle'.tr()),
+              additionalInfo: BaseAdaptiveSwitch(
+                value: _zeroImposterMode,
+                onChanged:
+                    _amountMinImposters > 0
+                        ? (change) => setState(() => _zeroImposterMode = change)
                         : null,
               ),
             ),

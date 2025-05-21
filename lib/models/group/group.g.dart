@@ -17,6 +17,13 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
   categoryUuids:
       (json['categoryUuids'] as List<dynamic>).map((e) => e as String).toList(),
   imposterSeesCategoryName: json['imposterSeesCategoryName'] as bool? ?? false,
+  zeroImposterMode: json['zeroImposterMode'] as bool? ?? false,
+  mode:
+      $enumDecodeNullable(_$PlayModeEnumMap, json['mode']) ??
+      PlayMode.freestyle,
+  modeTimeSeconds: (json['modeTimeSeconds'] as num?)?.toInt() ?? 60,
+  modeTapMinTaps: (json['modeTapMinTaps'] as num?)?.toInt() ?? 10,
+  modeTapMaxTaps: (json['modeTapMaxTaps'] as num?)?.toInt() ?? 30,
 );
 
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
@@ -27,4 +34,15 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
   'amountMaxImposters': instance.amountMaxImposters,
   'categoryUuids': instance.categoryUuids,
   'imposterSeesCategoryName': instance.imposterSeesCategoryName,
+  'zeroImposterMode': instance.zeroImposterMode,
+  'mode': _$PlayModeEnumMap[instance.mode]!,
+  'modeTimeSeconds': instance.modeTimeSeconds,
+  'modeTapMinTaps': instance.modeTapMinTaps,
+  'modeTapMaxTaps': instance.modeTapMaxTaps,
+};
+
+const _$PlayModeEnumMap = {
+  PlayMode.freestyle: 'freestyle',
+  PlayMode.time: 'time',
+  PlayMode.tap: 'tap',
 };

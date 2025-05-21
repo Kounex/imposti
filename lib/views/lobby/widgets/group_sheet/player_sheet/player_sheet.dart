@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imposti/models/group/group.dart';
-import 'package:imposti/views/lobby/widgets/group_sheet/widgets/player_sheet/player_dialog.dart';
+import 'package:imposti/views/lobby/widgets/group_sheet/player_sheet/player_dialog.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
 class PlayerSheet extends StatefulWidget {
