@@ -30,6 +30,8 @@ class _CountdownState extends State<Countdown> {
   late final AnimatedDigitController _controller;
   late bool _showCountdown;
 
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _CountdownState extends State<Countdown> {
 
     Future.delayed(Duration(seconds: widget.showCountdownDelay ?? 0), () {
       setState(() => _showCountdown = true);
-      Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         if (_controller.value > 0) {
           _controller.value--;
         } else {
@@ -49,6 +51,14 @@ class _CountdownState extends State<Countdown> {
         }
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+
+    super.dispose();
   }
 
   @override
