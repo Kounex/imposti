@@ -109,7 +109,7 @@ class ThemeUtils {
       iconTheme: IconThemeData(color: Color(0xFF1B1B1B)),
     ),
 
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: const Color(0xFFF6F1EB),
       elevation: 6,
       shadowColor: Colors.black.withOpacity(0.08),
@@ -146,7 +146,7 @@ class ThemeUtils {
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     ),
 
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: const Color(0xFFF6F1EB),
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -200,7 +200,7 @@ class ThemeUtils {
       elevation: 0,
     ),
 
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: Color(0xFFE69131),
       unselectedLabelColor: Color(0xFF406459),
       labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -269,7 +269,7 @@ class ThemeUtils {
       iconTheme: IconThemeData(color: Color(0xFFF1F1F1)),
     ),
 
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: const Color(0xFF2F2F31),
       elevation: 4,
       shadowColor: Colors.black.withOpacity(0.3),
@@ -310,7 +310,7 @@ class ThemeUtils {
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     ),
 
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: const Color(0xFF2A2A2D),
       elevation: 6,
       shape: RoundedRectangleBorder(
@@ -364,7 +364,7 @@ class ThemeUtils {
       elevation: 0,
     ),
 
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: Color(0xFFE69131),
       unselectedLabelColor: Color(0xFFCCCCCC),
       labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
