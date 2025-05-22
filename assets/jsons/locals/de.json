@@ -74,6 +74,8 @@
     "gameDialogExitGameTitle": "Spiel beenden?",
     "gameDialogExitGameBody": "Sicher, dass du das Spiel beenden willst?",
     "gamePlayStartDescription": "startet die Runde!",
+    "gamePlayStartCountdownDescription": "Runde beginnt in",
+    "gamePlayTimeEnd": "Runde endet in",
     "gamePlayDescription": "Bereit die Imposter aufzudecken?",
     "gamePlayBtnReveal": "Aufdecken",
     "gameRevealDescription": {

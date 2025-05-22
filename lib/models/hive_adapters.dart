@@ -9,6 +9,10 @@ enum HiveKey { settings, category, group }
 
 enum HiveSettingsKey { darkMode, languageCode, gradient }
 
-@GenerateAdapters([AdapterSpec<Category>(), AdapterSpec<Group>()])
+@GenerateAdapters([
+  AdapterSpec<Category>(),
+  AdapterSpec<Group>(),
+  AdapterSpec<PlayMode>(),
+])
 // ignore: unused_element
 void _() {}

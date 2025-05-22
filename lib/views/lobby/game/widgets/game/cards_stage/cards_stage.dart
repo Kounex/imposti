@@ -74,14 +74,12 @@ class _CardsStageState extends State<CardsStage> {
                             setState(() => _lastRevealedCardIndex = index);
                           },
                           player: player,
-                          word:
-                              widget.imposterIndices.contains(index)
-                                  ? widget.imposterSeesCategoryName
-                                      ? widget.categoryName
-                                      : 'Imposter'
-                                  : widget.word,
                           prot: widget.prots[index],
+                          word: widget.word,
+                          category: widget.categoryName,
                           imposter: widget.imposterIndices.contains(index),
+                          imposterSeesCategoryName:
+                              widget.imposterSeesCategoryName,
                         ),
                       ),
                   ],

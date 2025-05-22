@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.3.1
   in_app_review: ^2.0.10
   in_app_purchase: ^3.2.2
+  animated_digit: ^3.2.3
 
   # Base components
   base_components:

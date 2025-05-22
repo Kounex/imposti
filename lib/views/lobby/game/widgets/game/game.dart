@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:imposti/models/category/category.dart';
 import 'package:imposti/models/group/group.dart';
 import 'package:imposti/views/lobby/game/widgets/game/cards_stage/cards_stage.dart';
-import 'package:imposti/views/lobby/game/widgets/game/play_stage/play_stage.dart';
 import 'package:imposti/views/lobby/game/widgets/game/resolution_stage.dart';
 
 import '../../../../../utils/prots.dart';
+import 'play_stage/play_stage.dart';
 
 enum GameStage { cards, play, resolution }
 
@@ -162,6 +162,10 @@ class _GameState extends State<Game> {
           key: GlobalKey(),
           players: _shuffledPlayers,
           prots: _shuffledProts,
+          mode: widget.group.mode,
+          modeTimeSeconds: widget.group.modeTimeSeconds,
+          modeTapMinTaps: widget.group.modeTapMinTaps,
+          modeTapMaxTaps: widget.group.modeTapMaxTaps,
           onStageDone: () => setState(() => _stage = GameStage.resolution),
         ),
         GameStage.resolution => ResolutionStage(

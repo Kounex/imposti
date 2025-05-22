@@ -125,3 +125,44 @@ class CategoryAdapter extends TypeAdapter<Category> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class PlayModeAdapter extends TypeAdapter<PlayMode> {
+  @override
+  final int typeId = 3;
+
+  @override
+  PlayMode read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return PlayMode.freestyle;
+      case 1:
+        return PlayMode.time;
+      case 2:
+        return PlayMode.tap;
+      default:
+        return PlayMode.freestyle;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, PlayMode obj) {
+    switch (obj) {
+      case PlayMode.freestyle:
+        writer.writeByte(0);
+      case PlayMode.time:
+        writer.writeByte(1);
+      case PlayMode.tap:
+        writer.writeByte(2);
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayModeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

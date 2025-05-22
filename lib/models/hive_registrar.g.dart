@@ -9,5 +9,6 @@ extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(CategoryAdapter());
     registerAdapter(GroupAdapter());
+    registerAdapter(PlayModeAdapter());
   }
 }

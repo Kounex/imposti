@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  animated_digit:
+    dependency: "direct main"
+    description:
+      name: animated_digit
+      sha256: "22300a550b83e08ac4a0ef9c6fc7e800bbebc34978d997e6346da03d69fbb7a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.3"
   ansicolor:
     dependency: transitive
     description:
@@ -70,7 +78,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: f440cd04d4615752fbc5f0c534c71555e024325e
+      resolved-ref: b5aa64a6eea301c1a2ff1fbe21f2a7363293de2c
       url: "https://github.com/Kounex/base_components.git"
     source: git
     version: "1.0.0"

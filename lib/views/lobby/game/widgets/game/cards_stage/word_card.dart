@@ -8,19 +8,24 @@ import 'package:imposti/views/lobby/game/widgets/game/player_card%20copy.dart';
 
 class WordCard extends StatefulWidget {
   final String player;
-  final String word;
   final String prot;
 
+  final String word;
+  final String category;
+
   final bool imposter;
+  final bool imposterSeesCategoryName;
 
   final void Function()? onWordFullyRevealed;
 
   const WordCard({
     super.key,
     required this.player,
-    required this.word,
     required this.prot,
+    required this.word,
+    required this.category,
     required this.imposter,
+    required this.imposterSeesCategoryName,
     this.onWordFullyRevealed,
   });
 
@@ -107,40 +112,67 @@ class _WordCardState extends State<WordCard>
               PlayCard(
                 children: [
                   Positioned(
-                    top: DesignSystem.spacing.x64,
+                    top: DesignSystem.spacing.x48,
                     left: DesignSystem.spacing.x24,
                     right: DesignSystem.spacing.x24,
                     child: FittedBox(
                       key: _wordKey,
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          BaseCupertinoListTileIcon(
-                            widget.imposter
-                                ? Icons.android
-                                : CupertinoIcons.person_solid,
-                            size: DesignSystem.size.x32,
-                            iconSize: DesignSystem.size.x28,
-                            backgroundColor:
-                                widget.imposter ? Colors.red : Colors.blue,
-                          ),
-                          SizedBox(width: DesignSystem.spacing.x18),
-                          AutoSizeText(
-                            widget.word,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              textStyle: Theme.of(
-                                context,
-                              ).textTheme.displaySmall?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                              ),
+                      child: SizedBox(
+                        height: DesignSystem.size.x92,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                BaseCupertinoListTileIcon(
+                                  widget.imposter
+                                      ? Icons.android
+                                      : CupertinoIcons.person_solid,
+                                  size: DesignSystem.size.x32,
+                                  iconSize: DesignSystem.size.x28,
+                                  backgroundColor:
+                                      widget.imposter
+                                          ? Colors.red
+                                          : Colors.blue,
+                                ),
+                                SizedBox(width: DesignSystem.spacing.x18),
+                                AutoSizeText(
+                                  widget.imposter ? 'Imposter' : widget.word,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: Theme.of(
+                                      context,
+                                    ).textTheme.displaySmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            if (widget.imposter &&
+                                widget.imposterSeesCategoryName) ...[
+                              SizedBox(height: DesignSystem.spacing.x8),
+                              AutoSizeText(
+                                widget.category,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:base_components/base_components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DescriptiveSlider extends StatelessWidget {
   final double value;
@@ -12,6 +13,8 @@ class DescriptiveSlider extends StatelessWidget {
 
   final bool intMode;
 
+  final bool feedback;
+
   final void Function(double value)? onChanged;
 
   const DescriptiveSlider({
@@ -22,6 +25,7 @@ class DescriptiveSlider extends StatelessWidget {
     required this.max,
     this.divisions,
     this.intMode = true,
+    this.feedback = true,
     this.onChanged,
   });
 
@@ -46,7 +50,15 @@ class DescriptiveSlider extends StatelessWidget {
             Expanded(
               child: CupertinoSlider(
                 value: value,
-                onChanged: onChanged,
+                onChanged:
+                    onChanged != null
+                        ? (value) {
+                          if (feedback) {
+                            HapticFeedback.lightImpact();
+                          }
+                          onChanged!.call(value);
+                        }
+                        : null,
                 min: min,
                 max: max,
                 divisions: divisions,
