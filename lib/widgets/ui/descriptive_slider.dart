@@ -64,11 +64,11 @@ class DescriptiveSlider extends StatelessWidget {
                 value: value,
                 onChanged:
                     onChanged != null
-                        ? (value) {
-                          if (feedback) {
+                        ? (newValue) {
+                          if (feedback && newValue.toInt() != value.toInt()) {
                             HapticFeedback.lightImpact();
                           }
-                          onChanged!.call(value);
+                          onChanged!.call(newValue);
                         }
                         : null,
                 min: min,
