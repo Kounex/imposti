@@ -1,6 +1,7 @@
 import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/countdown.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/start_player.dart';
 
@@ -26,9 +27,19 @@ class TimeMode extends StatelessWidget {
         SizedBox(height: DesignSystem.spacing.x24),
         StartPlayer(player: startPlayer),
         Countdown(
+          onCountdownDone: () => onStageDone(true),
           text: 'gamePlayTimeEnd'.tr(),
           countdown: timeSeconds,
-          onCountdownDone: () => onStageDone(true),
+          valueColors: [
+            BaseValueColor(
+              condition: (value) => value <= 20,
+              color: Colors.orange,
+            ),
+            BaseValueColor(
+              condition: (value) => value <= 10,
+              color: Colors.red,
+            ),
+          ],
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacing.x12),
