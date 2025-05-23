@@ -52,11 +52,18 @@ class _TapModeState extends State<TapMode> {
 
     _entry = OverlayEntry(
       builder:
-          (context) => Listener(
-            key: _tapKey,
-            behavior: HitTestBehavior.opaque,
-            onPointerDown: (_) => _handleTap(),
-            child: SizedBox.expand(),
+          (context) => Positioned.fill(
+            child: Stack(
+              children: [
+                IgnorePointer(child: SizedBox.expand()),
+
+                Listener(
+                  behavior: HitTestBehavior.translucent,
+                  onPointerDown: (event) => _handleTap(),
+                  child: const SizedBox.expand(),
+                ),
+              ],
+            ),
           ),
     );
 
@@ -82,6 +89,7 @@ class _TapModeState extends State<TapMode> {
       duration: DesignSystem.animation.defaultDurationMS250,
       child: switch (_stage) {
         TapStage.tap => Column(
+          key: _tapKey,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(height: DesignSystem.spacing.x24),
@@ -93,12 +101,20 @@ class _TapModeState extends State<TapMode> {
                   loop: false,
                   textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSecondary,
+                    fontFeatures: [FontFeature.tabularFigures()],
                   ),
                 ),
                 Text('Taps'),
               ],
             ),
             Text('gamePlayTapDescription'.tr()),
+            SizedBox(
+              width: DesignSystem.size.x128 + DesignSystem.size.x92,
+              child: CupertinoButton.filled(
+                onPressed: () => widget.onStageDone(false),
+                child: Text('gamePlayBtnReveal'.tr()),
+              ),
+            ),
             SizedBox(height: DesignSystem.spacing.x24),
           ],
         ),

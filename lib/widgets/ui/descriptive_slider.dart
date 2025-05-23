@@ -40,14 +40,16 @@ class DescriptiveSlider extends StatelessWidget {
           children: [
             Expanded(child: Text(description)),
             SizedBox(width: DesignSystem.spacing.x24),
-            SizedBox(
-              width: valueSize,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: valueSize ?? DesignSystem.size.x32,
+              ),
               child: Text(
                 '${intMode ? value.toInt() : value}',
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   fontFeatures: [FontFeature.tabularFigures()],
                 ),
-                textAlign: TextAlign.end,
+                textAlign: TextAlign.center,
               ),
             ),
           ],
@@ -55,9 +57,13 @@ class DescriptiveSlider extends StatelessWidget {
         SizedBox(height: DesignSystem.spacing.x24),
         Row(
           children: [
-            Text(
-              '${intMode ? min.toInt() : min}',
-              style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: DesignSystem.size.x32),
+              child: Text(
+                '${intMode ? min.toInt() : min}',
+                style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+                textAlign: TextAlign.center,
+              ),
             ),
             Expanded(
               child: CupertinoSlider(
@@ -78,9 +84,13 @@ class DescriptiveSlider extends StatelessWidget {
                 divisions: divisions,
               ),
             ),
-            Text(
-              '${intMode ? max.toInt() : max}',
-              style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: DesignSystem.size.x32),
+              child: Text(
+                '${intMode ? max.toInt() : max}',
+                style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
