@@ -39,7 +39,7 @@ class _CardsStageState extends State<CardsStage> {
   int? _lastRevealedCardIndex;
 
   bool _isAtLastPlayer() =>
-      (_controller.page ?? 0).round() >= widget.players.length - 1;
+      (_controller.page ?? 0).floor() == widget.players.length - 1;
 
   @override
   Widget build(BuildContext context) {
@@ -95,29 +95,31 @@ class _CardsStageState extends State<CardsStage> {
                     ),
                     child: SizedBox(
                       width: double.infinity,
-                      child: CupertinoButton.filled(
-                        onPressed:
+                      child: AnimatedOpacity(
+                        duration: DesignSystem.animation.defaultDurationMS250,
+                        opacity:
                             _lastRevealedCardIndex ==
                                     (_controller.page?.ceil() ?? -1)
-                                ? () {
-                                  if (!_isAtLastPlayer()) {
-                                    _controller.nextPage(
-                                      duration:
-                                          DesignSystem
-                                              .animation
-                                              .defaultDurationMS250,
-                                      curve: Curves.easeIn,
-                                    );
-                                  } else {
-                                    widget.onStageDone?.call();
-                                  }
-                                }
-                                : null,
-                        child: Text(
-                          (!_isAtLastPlayer()
-                                  ? 'gameBtnNextPlayer'
-                                  : 'lobbyBtnStart')
-                              .tr(),
+                                ? 1
+                                : 0,
+                        child: CupertinoButton.filled(
+                          onPressed: () {
+                            if (!_isAtLastPlayer()) {
+                              _controller.nextPage(
+                                duration:
+                                    DesignSystem.animation.defaultDurationMS250,
+                                curve: Curves.easeIn,
+                              );
+                            } else {
+                              widget.onStageDone?.call();
+                            }
+                          },
+                          child: Text(
+                            (!_isAtLastPlayer()
+                                    ? 'gameBtnNextPlayer'
+                                    : 'lobbyBtnStart')
+                                .tr(),
+                          ),
                         ),
                       ),
                     ),

@@ -76,12 +76,15 @@
     "gamePlayStartDescription": "startet die Runde!",
     "gamePlayStartCountdownDescription": "Runde beginnt in",
     "gamePlayTimeEnd": "Runde endet in",
+    "gamePlayTapDescription": "Nach jedem Wort auf den Screen tappen!",
+    "gamePlayTapTimerDescription": "Imposter gewinnen in",
     "gamePlayDescription": "Bereit die Imposter aufzudecken?",
     "gamePlayBtnReveal": "Aufdecken",
     "gameRevealDescription": {
         "one": "war der Imposter!\nKonntet ihr sie entlarven?!",
         "two": "waren die Imposter!\nKonntet ihr sie entlarven?!"
     },
+    "gameRevealImposterWonDescription": "Die Imposter haben gewonnen!",
     "gameRevealBtnAnotherRound": "Neue Runde",
     "gGame": "Spiel",
     "gOptional": "Optional",

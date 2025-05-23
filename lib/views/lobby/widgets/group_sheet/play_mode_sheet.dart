@@ -106,6 +106,7 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
                 onChanged:
                     (time) => setState(() => _modeTimeSeconds = time.toInt()),
                 value: _modeTimeSeconds.toDouble(),
+                valueSize: DesignSystem.size.x64,
                 description: 'lobbyPlayModeTimeDescription'.tr(),
                 min: 10,
                 max: 120,

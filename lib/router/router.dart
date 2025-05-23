@@ -105,7 +105,7 @@ class BaseAppRouter {
 
   Page _webPage(BaseRoute route, GoRouterState state) => NoTransitionPage(
     child: Title(
-      title: 'EMM | ${route.name}',
+      title: 'Imposti | ${route.name}',
       color: Colors.white,
 
       /// TODO: needs to be tested. On mobile, swiping back should not work

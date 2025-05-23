@@ -10,17 +10,17 @@ class StartPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('gPlayer'.plural(1)),
+          // Text('gPlayer'.plural(1)),
           Text(
             player,
             textAlign: TextAlign.center,
-            style: Theme.of(
-              context,
-            ).textTheme.displaySmall!.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
           ),
           SizedBox(height: DesignSystem.spacing.x8),
           Text('gamePlayStartDescription'.tr()),

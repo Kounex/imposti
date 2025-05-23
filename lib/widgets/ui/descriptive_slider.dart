@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 
 class DescriptiveSlider extends StatelessWidget {
   final double value;
+  final double? valueSize;
+
   final String description;
 
   final double min;
@@ -20,6 +22,7 @@ class DescriptiveSlider extends StatelessWidget {
   const DescriptiveSlider({
     super.key,
     required this.value,
+    this.valueSize,
     required this.description,
     required this.min,
     required this.max,
@@ -37,16 +40,25 @@ class DescriptiveSlider extends StatelessWidget {
           children: [
             Expanded(child: Text(description)),
             SizedBox(width: DesignSystem.spacing.x24),
-            Text(
-              '${intMode ? value.toInt() : value}',
-              style: Theme.of(context).textTheme.labelLarge,
+            SizedBox(
+              width: valueSize,
+              child: Text(
+                '${intMode ? value.toInt() : value}',
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
+                textAlign: TextAlign.end,
+              ),
             ),
           ],
         ),
         SizedBox(height: DesignSystem.spacing.x24),
         Row(
           children: [
-            Text('${intMode ? min.toInt() : min}'),
+            Text(
+              '${intMode ? min.toInt() : min}',
+              style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+            ),
             Expanded(
               child: CupertinoSlider(
                 value: value,
@@ -64,7 +76,10 @@ class DescriptiveSlider extends StatelessWidget {
                 divisions: divisions,
               ),
             ),
-            Text('${intMode ? max.toInt() : max}'),
+            Text(
+              '${intMode ? max.toInt() : max}',
+              style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+            ),
           ],
         ),
       ],

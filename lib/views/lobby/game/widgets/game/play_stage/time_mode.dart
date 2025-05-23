@@ -9,7 +9,7 @@ class TimeMode extends StatelessWidget {
 
   final int timeSeconds;
 
-  final void Function() onStageDone;
+  final void Function(bool imposterWon) onStageDone;
 
   const TimeMode({
     super.key,
@@ -28,14 +28,14 @@ class TimeMode extends StatelessWidget {
         Countdown(
           text: 'gamePlayTimeEnd'.tr(),
           countdown: timeSeconds,
-          onCountdownDone: onStageDone,
+          onCountdownDone: () => onStageDone(true),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacing.x12),
           child: SizedBox(
             width: double.infinity,
             child: CupertinoButton.filled(
-              onPressed: onStageDone,
+              onPressed: () => onStageDone(false),
               child: Text('gamePlayBtnReveal'.tr()),
             ),
           ),

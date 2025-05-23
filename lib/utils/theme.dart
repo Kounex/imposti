@@ -78,7 +78,7 @@ class ThemeUtils {
       ),
     ],
 
-    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    scaffoldBackgroundColor: const Color(0xFF406459),
 
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
@@ -238,7 +238,7 @@ class ThemeUtils {
       ),
     ],
 
-    scaffoldBackgroundColor: const Color(0xFF1C1C1E),
+    scaffoldBackgroundColor: const Color(0xFF000000),
 
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,

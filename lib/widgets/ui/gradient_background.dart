@@ -41,10 +41,23 @@ class GradientBackground extends StatelessWidget {
                                 Theme.of(context)
                                     .extension<ImpostiColors>()!
                                     .gradientMainSurface
-                                    .darken(50),
+                                    .darken(
+                                      settingsBox.get(
+                                            HiveSettingsKey.darkMode.name,
+                                          )
+                                          ? 60
+                                          : 50,
+                                    ),
                                 Theme.of(context)
                                     .extension<ImpostiColors>()!
-                                    .gradientSecondarySurface,
+                                    .gradientSecondarySurface
+                                    .darken(
+                                      settingsBox.get(
+                                            HiveSettingsKey.darkMode.name,
+                                          )
+                                          ? 40
+                                          : 20,
+                                    ),
                               ],
                           begin: begin ?? Alignment.bottomLeft,
                           end: end ?? Alignment.topRight,

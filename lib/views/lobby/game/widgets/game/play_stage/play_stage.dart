@@ -8,6 +8,7 @@ import 'package:imposti/views/lobby/game/widgets/game/play_stage/countdown.dart'
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/freestyle_mode.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/start_player.dart';
 
+import 'tap_mode.dart';
 import 'time_mode.dart';
 
 enum Stage { startPlayer, mode }
@@ -23,7 +24,7 @@ class PlayStage extends StatefulWidget {
   final int modeTapMinTaps;
   final int modeTapMaxTaps;
 
-  final void Function() onStageDone;
+  final void Function(bool imposterWon) onStageDone;
 
   const PlayStage({
     super.key,
@@ -90,7 +91,7 @@ class _PlayStageState extends State<PlayStage> with TickerProviderStateMixin {
               PlayMode.freestyle => FreestyleMode(
                 key: _modeKey,
                 startPlayer: widget.players[_startPlayerIndex],
-                onStageDone: widget.onStageDone,
+                onStageDone: () => widget.onStageDone(false),
               ),
               PlayMode.time => TimeMode(
                 key: _modeKey,
@@ -98,9 +99,11 @@ class _PlayStageState extends State<PlayStage> with TickerProviderStateMixin {
                 timeSeconds: widget.modeTimeSeconds,
                 onStageDone: widget.onStageDone,
               ),
-              PlayMode.tap => FreestyleMode(
+              PlayMode.tap => TapMode(
                 key: _modeKey,
                 startPlayer: widget.players[_startPlayerIndex],
+                minTaps: widget.modeTapMinTaps,
+                maxTaps: widget.modeTapMaxTaps,
                 onStageDone: widget.onStageDone,
               ),
             },

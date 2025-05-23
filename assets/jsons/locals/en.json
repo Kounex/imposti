@@ -76,12 +76,15 @@
     "gamePlayStartDescription": "starts the round!",
     "gamePlayStartCountdownDescription": "Round starts in",
     "gamePlayTimeEnd": "Round ends in",
+    "gamePlayTapDescription": "Tap the screen after each!",
+    "gamePlayTapTimerDescription": "Imposters will win in",
     "gamePlayDescription": "Ready to reveal the imposters?",
     "gamePlayBtnReveal": "Reveal",
     "gameRevealDescription": {
         "one": "was the imposter!\nWere you able to expose them?!",
         "two": "were the imposters!\nWere you able to expose them?!"
     },
+    "gameRevealImposterWonDescription": "The imposters won!",
     "gameRevealBtnAnotherRound": "New round",
     "gGame": "Game",
     "gOptional": "Optional",

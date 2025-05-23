@@ -8,12 +8,15 @@ class ResolutionStage extends StatefulWidget {
   final List<String> imposters;
   final List<String> prots;
 
+  final bool imposterWon;
+
   final void Function()? onStageDone;
 
   const ResolutionStage({
     super.key,
     required this.imposters,
     required this.prots,
+    required this.imposterWon,
     this.onStageDone,
   });
 
@@ -79,11 +82,13 @@ class _ResolutionStageState extends State<ResolutionStage> {
               horizontal: DesignSystem.spacing.x24 + DesignSystem.spacing.x12,
             ),
             child: Text(
-              'gameRevealDescription'.plural(widget.imposters.length),
+              widget.imposterWon
+                  ? 'gameRevealImposterWonDescription'.tr()
+                  : 'gameRevealDescription'.plural(widget.imposters.length),
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall!.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
             ),
           ),
           SizedBox(height: DesignSystem.spacing.x48),

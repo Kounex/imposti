@@ -41,6 +41,8 @@ class _GameState extends State<Game> {
   late List<int> _imposterIndices;
   late List<String> _shuffledProts;
 
+  bool _imposterWon = false;
+
   @override
   void initState() {
     super.initState();
@@ -166,7 +168,11 @@ class _GameState extends State<Game> {
           modeTimeSeconds: widget.group.modeTimeSeconds,
           modeTapMinTaps: widget.group.modeTapMinTaps,
           modeTapMaxTaps: widget.group.modeTapMaxTaps,
-          onStageDone: () => setState(() => _stage = GameStage.resolution),
+          onStageDone:
+              (imposterWon) => setState(() {
+                _imposterWon = imposterWon;
+                _stage = GameStage.resolution;
+              }),
         ),
         GameStage.resolution => ResolutionStage(
           key: GlobalKey(),
@@ -176,6 +182,7 @@ class _GameState extends State<Game> {
           prots: List.from(
             _imposterIndices.map((index) => _shuffledProts[index]),
           ),
+          imposterWon: _imposterWon,
           onStageDone: () {
             _initGame();
             setState(() => _stage = GameStage.cards);
