@@ -84,74 +84,86 @@ class _TapModeState extends State<TapMode> {
   }
 
   @override
+  void dispose() {
+    _entry.remove();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: DesignSystem.animation.defaultDurationMS250,
-      child: switch (_stage) {
-        TapStage.tap => Column(
-          key: _tapKey,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(height: DesignSystem.spacing.x24),
-            StartPlayer(player: widget.startPlayer),
-            Column(
-              children: [
-                AnimatedDigitWidget(
-                  controller: _controller,
-                  loop: false,
-                  textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                    fontFeatures: [FontFeature.tabularFigures()],
+    return DefaultTextStyle(
+      style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+      child: AnimatedSwitcher(
+        duration: DesignSystem.animation.defaultDurationMS250,
+        child: switch (_stage) {
+          TapStage.tap => Column(
+            key: _tapKey,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(height: DesignSystem.spacing.x24),
+              StartPlayer(player: widget.startPlayer),
+              Column(
+                children: [
+                  AnimatedDigitWidget(
+                    controller: _controller,
+                    loop: false,
+                    textStyle: Theme.of(
+                      context,
+                    ).textTheme.displaySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      fontFeatures: [FontFeature.tabularFigures()],
+                    ),
                   ),
-                ),
-                Text('Taps'),
-              ],
-            ),
-            Text('gamePlayTapDescription'.tr()),
-            SizedBox(
-              width: DesignSystem.size.x128 + DesignSystem.size.x92,
-              child: CupertinoButton.filled(
-                onPressed: () => widget.onStageDone(false),
-                child: Text('gamePlayBtnReveal'.tr()),
+                  Text('Taps'),
+                ],
               ),
-            ),
-            SizedBox(height: DesignSystem.spacing.x24),
-          ],
-        ),
-        TapStage.reveal => Column(
-          key: _revealKey,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Countdown(
-              text: 'gamePlayTapTimerDescription'.tr(),
-              textStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
-              ),
-              onCountdownDone: () => widget.onStageDone(true),
-              countdown: 10,
-              spacing: DesignSystem.spacing.x64,
-              valueColors: [
-                BaseValueColor(
-                  condition: (value) => value <= 10,
-                  color: Colors.orange,
+              Text('gamePlayTapDescription'.tr()),
+              SizedBox(
+                width: DesignSystem.size.x128 + DesignSystem.size.x92,
+                child: CupertinoButton.filled(
+                  onPressed: () => widget.onStageDone(false),
+                  child: Text('gamePlayBtnReveal'.tr()),
                 ),
-                BaseValueColor(
-                  condition: (value) => value <= 5,
-                  color: Colors.red,
-                ),
-              ],
-            ),
-            SizedBox(height: DesignSystem.spacing.x64),
-            SizedBox(
-              width: DesignSystem.size.x128 + DesignSystem.size.x92,
-              child: CupertinoButton.filled(
-                onPressed: () => widget.onStageDone(false),
-                child: Text('gamePlayBtnReveal'.tr()),
               ),
-            ),
-          ],
-        ),
-      },
+              SizedBox(height: DesignSystem.spacing.x24),
+            ],
+          ),
+          TapStage.reveal => Column(
+            key: _revealKey,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Countdown(
+                text: 'gamePlayTapTimerDescription'.tr(),
+                textStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+                onCountdownDone: () => widget.onStageDone(true),
+                countdown: 10,
+                spacing: DesignSystem.spacing.x64,
+                valueColors: [
+                  BaseValueColor(
+                    condition: (value) => value <= 10,
+                    color: Colors.orange,
+                  ),
+                  BaseValueColor(
+                    condition: (value) => value <= 5,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
+              SizedBox(height: DesignSystem.spacing.x64),
+              SizedBox(
+                width: DesignSystem.size.x128 + DesignSystem.size.x92,
+                child: CupertinoButton.filled(
+                  onPressed: () => widget.onStageDone(false),
+                  child: Text('gamePlayBtnReveal'.tr()),
+                ),
+              ),
+            ],
+          ),
+        },
+      ),
     );
   }
 }

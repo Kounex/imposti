@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_card.dart';
-import 'package:imposti/views/lobby/game/widgets/game/player_card%20copy.dart';
+import 'package:imposti/views/lobby/game/widgets/game/player_card.dart';
 
 class WordCard extends StatefulWidget {
   final String player;

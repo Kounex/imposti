@@ -92,62 +92,55 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
             ),
           ],
         ),
-        SizedBox(height: DesignSystem.spacing.x48),
+        SizedBox(height: DesignSystem.spacing.x32),
         AnimatedSwitcher(
           duration: DesignSystem.animation.defaultDurationMS500,
           switchInCurve: Curves.easeIn,
           switchOutCurve: Curves.easeIn,
           child: switch (_mode) {
             PlayMode.freestyle => SizedBox(key: _freestyleKey),
-            PlayMode.time => SizedBox(
+            PlayMode.time => DescriptiveSlider(
               key: _timeKey,
-              height: DesignSystem.size.x256,
-              child: DescriptiveSlider(
-                onChanged:
-                    (time) => setState(() => _modeTimeSeconds = time.toInt()),
-                value: _modeTimeSeconds.toDouble(),
-                description: 'lobbyPlayModeTimeDescription'.tr(),
-                min: 10,
-                max: 120,
-                divisions: ((120 - 10) / 10).toInt(),
-              ),
+              onChanged:
+                  (time) => setState(() => _modeTimeSeconds = time.toInt()),
+              value: _modeTimeSeconds.toDouble(),
+              description: 'lobbyPlayModeTimeDescription'.tr(),
+              min: 10,
+              max: 120,
+              divisions: ((120 - 10) / 10).toInt(),
             ),
-            PlayMode.tap => SizedBox(
+            PlayMode.tap => Column(
               key: _tapKey,
-              height: DesignSystem.size.x256,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DescriptiveSlider(
-                    onChanged: (taps) {
-                      if (taps <= _modeTapMaxTaps) {
-                        setState(() => _modeTapMinTaps = taps.toInt());
-                      }
-                    },
-                    value: _modeTapMinTaps.toDouble(),
-                    description: 'lobbyPlayModeTapMinDescription'.tr(),
-                    min: 5,
-                    max: 50,
-                    divisions: 50 - 5,
-                  ),
-                  SizedBox(height: DesignSystem.spacing.x48),
-                  DescriptiveSlider(
-                    onChanged: (taps) {
-                      if (taps >= _modeTapMinTaps) {
-                        setState(() => _modeTapMaxTaps = taps.toInt());
-                      }
-                    },
-                    value: _modeTapMaxTaps.toDouble(),
-                    description: 'lobbyPlayModeTapMaxDescription'.tr(),
-                    min: 5,
-                    max: 50,
-                    divisions: 50 - 5,
-                  ),
-                ],
-              ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DescriptiveSlider(
+                  onChanged: (taps) {
+                    setState(() => _modeTapMinTaps = taps.toInt());
+                  },
+                  value: _modeTapMinTaps.toDouble(),
+                  description: 'lobbyPlayModeTapMinDescription'.tr(),
+                  min: 5,
+                  max: 50,
+                  softMax: _modeTapMaxTaps.toDouble(),
+                  divisions: 50 - 5,
+                ),
+                SizedBox(height: DesignSystem.spacing.x48),
+                DescriptiveSlider(
+                  onChanged: (taps) {
+                    setState(() => _modeTapMaxTaps = taps.toInt());
+                  },
+                  value: _modeTapMaxTaps.toDouble(),
+                  description: 'lobbyPlayModeTapMaxDescription'.tr(),
+                  min: 5,
+                  max: 50,
+                  softMin: _modeTapMinTaps.toDouble(),
+                  divisions: 50 - 5,
+                ),
+              ],
             ),
           },
         ),
+        SizedBox(height: DesignSystem.spacing.x24),
       ],
     );
   }

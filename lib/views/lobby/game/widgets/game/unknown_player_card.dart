@@ -2,7 +2,7 @@ import 'package:base_components/base_components.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../../../utils/prots.dart';
+import '../../../../../utils/prots.dart';
 
 class UnknownPlayerCard extends StatefulWidget {
   const UnknownPlayerCard({super.key});

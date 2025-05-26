@@ -81,6 +81,7 @@
     "gamePlayDescription": "Bereit die Imposter aufzudecken?",
     "gamePlayBtnReveal": "Aufdecken",
     "gameRevealDescription": {
+        "zero": "Es gab keinen Imposter!",
         "one": "war der Imposter!\nKonntet ihr sie entlarven?!",
         "two": "waren die Imposter!\nKonntet ihr sie entlarven?!"
     },

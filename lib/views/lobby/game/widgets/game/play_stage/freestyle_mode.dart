@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_stage/start_player.dart';
 
-import 'unknown_player_card.dart';
+import '../unknown_player_card.dart';
 
 class FreestyleMode extends StatelessWidget {
   final String startPlayer;

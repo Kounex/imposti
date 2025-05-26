@@ -6,12 +6,16 @@ import 'package:flutter/services.dart';
 class DescriptiveSlider extends StatelessWidget {
   final double value;
   final double? valueSize;
+  final Color? valueColor;
 
   final String description;
 
   final double min;
   final double max;
   final int? divisions;
+
+  final double? softMin;
+  final double? softMax;
 
   final bool intMode;
 
@@ -23,10 +27,13 @@ class DescriptiveSlider extends StatelessWidget {
     super.key,
     required this.value,
     this.valueSize,
+    this.valueColor,
     required this.description,
     required this.min,
     required this.max,
     this.divisions,
+    this.softMin,
+    this.softMax,
     this.intMode = true,
     this.feedback = true,
     this.onChanged,
@@ -34,6 +41,9 @@ class DescriptiveSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localMin = softMin ?? min;
+    final localMax = softMax ?? max;
+
     return Column(
       children: [
         Row(
@@ -47,6 +57,7 @@ class DescriptiveSlider extends StatelessWidget {
               child: Text(
                 '${intMode ? value.toInt() : value}',
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  color: valueColor ?? Theme.of(context).colorScheme.primary,
                   fontFeatures: [FontFeature.tabularFigures()],
                 ),
                 textAlign: TextAlign.center,
@@ -71,7 +82,9 @@ class DescriptiveSlider extends StatelessWidget {
                 onChanged:
                     onChanged != null
                         ? (newValue) {
-                          if (newValue.toInt() != value.toInt()) {
+                          if (newValue.toInt() != value.toInt() &&
+                              newValue.toInt() >= localMin &&
+                              newValue.toInt() <= localMax) {
                             if (feedback) {
                               HapticFeedback.lightImpact();
                             }

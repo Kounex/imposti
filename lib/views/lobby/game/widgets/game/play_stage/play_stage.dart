@@ -80,7 +80,7 @@ class _PlayStageState extends State<PlayStage> with TickerProviderStateMixin {
                   bottom: DesignSystem.spacing.x24,
                   child: Countdown(
                     countdown: 3,
-                    showCountdownDelay: 3,
+                    showCountdownDelay: 1,
                     text: 'gamePlayStartCountdownDescription'.tr(),
                     onCountdownDone: () => setState(() => _stage = Stage.mode),
                   ),
