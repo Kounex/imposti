@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,10 +90,11 @@ class _ResolutionStageState extends State<ResolutionStage> {
             padding: EdgeInsets.symmetric(
               horizontal: DesignSystem.spacing.x24 + DesignSystem.spacing.x12,
             ),
-            child: Text(
-              widget.imposterWon
+            child: AutoSizeText(
+              widget.imposterWon && widget.imposters.isNotEmpty
                   ? 'gameRevealImposterWonDescription'.tr()
                   : 'gameRevealDescription'.plural(widget.imposters.length),
+              maxLines: 2,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onSecondary,

@@ -16,6 +16,7 @@ import 'package:imposti/widgets/builder/hive_builder.dart';
 import 'package:imposti/widgets/ui/imposti_scaffold.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class SettingsView extends RouterStatefulView {
   const SettingsView({super.key});
@@ -97,7 +98,7 @@ class _SettingsViewState extends State<SettingsView> {
                           change,
                         ),
                   ),
-                  leadingIcon: Icons.gradient,
+                  leadingIcon: PhosphorIcons.gradient(PhosphorIconsStyle.fill),
                   leadingIconBackgroundColor:
                       Theme.of(context).colorScheme.primary,
                 ),
@@ -190,7 +191,9 @@ class _SettingsViewState extends State<SettingsView> {
                         DonateSheet(),
                       ),
                   title: Text('settingsDonate'.tr()),
-                  leadingIcon: Icons.wallet,
+                  leadingIcon: PhosphorIcons.cardholder(
+                    PhosphorIconsStyle.fill,
+                  ),
                   leadingIconBackgroundColor: Colors.red,
                 ),
               ],

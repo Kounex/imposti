@@ -4,6 +4,7 @@ import 'package:imposti/views/intro/intro.dart';
 import 'package:imposti/views/lobby/game/game.dart';
 import 'package:imposti/views/lobby/lobby.dart';
 import 'package:imposti/views/shared/custom_categories/custom_categories.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../views/tabs/dashboard/dashboard.dart';
 import '../views/tabs/settings/settings.dart';
@@ -93,7 +94,9 @@ enum TabAppRoute implements BaseRoute {
 
   @override
   IconData? get icon => switch (this) {
-    TabAppRoute.dashboard => Icons.gamepad,
+    TabAppRoute.dashboard => PhosphorIcons.gameController(
+      PhosphorIconsStyle.fill,
+    ),
     TabAppRoute.settings => Icons.more_horiz,
     TabAppRoute.settingsCustomCategories => null,
   };

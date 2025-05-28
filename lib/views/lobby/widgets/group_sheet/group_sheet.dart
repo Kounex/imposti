@@ -12,6 +12,7 @@ import 'package:imposti/views/lobby/widgets/group_sheet/imposter_sheet.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/play_mode_sheet.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/player_sheet/player_sheet.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/v4.dart';
 
 import '../../../../models/category/category.dart';
@@ -201,7 +202,7 @@ class _GroupSheetState extends State<GroupSheet> {
           tiles: [
             BaseCupertinoListTile(
               onTap: _handlePlayerTile,
-              leadingIcon: CupertinoIcons.person_solid,
+              leadingIcon: Icons.person,
               additionalInfo: Row(
                 children: [
                   Text('${_group.players.length}'),
@@ -223,7 +224,7 @@ class _GroupSheetState extends State<GroupSheet> {
             ),
             BaseCupertinoListTile(
               onTap: _handleImposterTile,
-              leadingIcon: Icons.android,
+              leadingIcon: PhosphorIcons.detective(PhosphorIconsStyle.fill),
               leadingIconBackgroundColor: Colors.red,
               title: Text('lobbyAmountImpostersTitle'.tr()),
               additionalInfo: Row(

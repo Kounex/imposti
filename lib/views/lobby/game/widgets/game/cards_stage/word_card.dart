@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:imposti/views/lobby/game/widgets/game/play_card.dart';
 import 'package:imposti/views/lobby/game/widgets/game/player_card.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class WordCard extends StatefulWidget {
   final String player;
@@ -39,6 +40,7 @@ class _WordCardState extends State<WordCard>
   late Animation<double> _size;
 
   final GlobalKey _wordKey = GlobalKey();
+  final GlobalKey _imposterKey = GlobalKey();
   final GlobalKey _playerCardKey = GlobalKey();
 
   bool _isRevealed = false;
@@ -68,8 +70,13 @@ class _WordCardState extends State<WordCard>
   }
 
   void _checkRevealProgress() {
+    final key =
+        widget.imposter && widget.imposterSeesCategoryName
+            ? _imposterKey
+            : _wordKey;
+
     final RenderBox? wordBox =
-        _wordKey.currentContext?.findRenderObject() as RenderBox?;
+        key.currentContext?.findRenderObject() as RenderBox?;
     final RenderBox? playerCardBox =
         _playerCardKey.currentContext?.findRenderObject() as RenderBox?;
 
@@ -116,20 +123,21 @@ class _WordCardState extends State<WordCard>
                     left: DesignSystem.spacing.x24,
                     right: DesignSystem.spacing.x24,
                     child: FittedBox(
-                      key: _wordKey,
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.bottomCenter,
                       child: SizedBox(
                         height: DesignSystem.size.x92,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 BaseCupertinoListTileIcon(
                                   widget.imposter
-                                      ? Icons.android
+                                      ? PhosphorIcons.detective(
+                                        PhosphorIconsStyle.fill,
+                                      )
                                       : CupertinoIcons.person_solid,
                                   size: DesignSystem.size.x32,
                                   iconSize: DesignSystem.size.x28,
@@ -140,6 +148,7 @@ class _WordCardState extends State<WordCard>
                                 ),
                                 SizedBox(width: DesignSystem.spacing.x18),
                                 AutoSizeText(
+                                  key: _wordKey,
                                   widget.imposter ? 'Imposter' : widget.word,
                                   maxLines: 1,
                                   textAlign: TextAlign.center,
@@ -158,6 +167,7 @@ class _WordCardState extends State<WordCard>
                                 widget.imposterSeesCategoryName) ...[
                               SizedBox(height: DesignSystem.spacing.x8),
                               AutoSizeText(
+                                key: _imposterKey,
                                 widget.category,
                                 maxLines: 1,
                                 textAlign: TextAlign.center,
