@@ -25,8 +25,6 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
   late int _modeTapMaxTaps;
 
   final _freestyleKey = GlobalKey();
-  final _timeKey = GlobalKey();
-  final _tapKey = GlobalKey();
 
   @override
   void initState() {
@@ -100,7 +98,6 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
           child: switch (_mode) {
             PlayMode.freestyle => SizedBox(key: _freestyleKey),
             PlayMode.time => DescriptiveSlider(
-              key: _timeKey,
               onChanged:
                   (time) => setState(() => _modeTimeSeconds = time.toInt()),
               value: _modeTimeSeconds.toDouble(),
@@ -110,7 +107,6 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
               divisions: ((120 - 10) / 10).toInt(),
             ),
             PlayMode.tap => Column(
-              key: _tapKey,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DescriptiveSlider(

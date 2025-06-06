@@ -26,45 +26,45 @@ class GradientBackground extends StatelessWidget {
         hiveKey: HiveKey.settings,
         rebuildKeys: [HiveSettingsKey.gradient],
         builder:
-            (context, settingsBox, child) =>
-                settingsBox.get(
-                          HiveSettingsKey.gradient.name,
-                          defaultValue: true,
-                        ) ||
-                        forceGradient
-                    ? Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors:
-                              colors ??
-                              [
-                                Theme.of(context)
-                                    .extension<ImpostiColors>()!
-                                    .gradientMainSurface
-                                    .darken(
-                                      settingsBox.get(
-                                            HiveSettingsKey.darkMode.name,
-                                          )
-                                          ? 60
-                                          : 50,
-                                    ),
-                                Theme.of(context)
-                                    .extension<ImpostiColors>()!
-                                    .gradientSecondarySurface
-                                    .darken(
-                                      settingsBox.get(
-                                            HiveSettingsKey.darkMode.name,
-                                          )
-                                          ? 40
-                                          : 20,
-                                    ),
-                              ],
-                          begin: begin ?? Alignment.bottomLeft,
-                          end: end ?? Alignment.topRight,
-                        ),
-                      ),
-                    )
-                    : SizedBox(),
+            (context, settingsBox, child) => AnimatedOpacity(
+              duration: DesignSystem.animation.defaultDurationMS250,
+              opacity:
+                  settingsBox.get(
+                            HiveSettingsKey.gradient.name,
+                            defaultValue: true,
+                          ) ||
+                          forceGradient
+                      ? 1.0
+                      : 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors:
+                        colors ??
+                        [
+                          Theme.of(context)
+                              .extension<ImpostiColors>()!
+                              .gradientMainSurface
+                              .darken(
+                                settingsBox.get(HiveSettingsKey.darkMode.name)
+                                    ? 60
+                                    : 50,
+                              ),
+                          Theme.of(context)
+                              .extension<ImpostiColors>()!
+                              .gradientSecondarySurface
+                              .darken(
+                                settingsBox.get(HiveSettingsKey.darkMode.name)
+                                    ? 40
+                                    : 20,
+                              ),
+                        ],
+                    begin: begin ?? Alignment.bottomLeft,
+                    end: end ?? Alignment.topRight,
+                  ),
+                ),
+              ),
+            ),
       ),
     );
   }
