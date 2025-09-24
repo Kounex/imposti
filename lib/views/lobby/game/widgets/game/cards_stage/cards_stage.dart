@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'word_card.dart';
@@ -38,6 +39,9 @@ class _CardsStageState extends State<CardsStage> {
 
   int? _lastRevealedCardIndex;
 
+  bool _currentCardRevealed() =>
+      _lastRevealedCardIndex == (_controller.page?.ceil() ?? -1);
+
   bool _isAtLastPlayer() =>
       (_controller.page ?? 0).floor() == widget.players.length - 1;
 
@@ -68,18 +72,61 @@ class _CardsStageState extends State<CardsStage> {
                               DesignSystem.spacing.x24 +
                               DesignSystem.spacing.x12,
                         ),
-                        child: WordCard(
-                          onWordFullyRevealed: () {
-                            HapticFeedback.lightImpact();
-                            setState(() => _lastRevealedCardIndex = index);
-                          },
-                          player: player,
-                          prot: widget.prots[index],
-                          word: widget.word,
-                          category: widget.categoryName,
-                          imposter: widget.imposterIndices.contains(index),
-                          imposterSeesCategoryName:
-                              widget.imposterSeesCategoryName,
+                        child: Stack(
+                          alignment: AlignmentGeometry.bottomRight,
+                          children: [
+                            WordCard(
+                              onWordFullyRevealed: () {
+                                HapticFeedback.lightImpact();
+                                setState(() => _lastRevealedCardIndex = index);
+                              },
+                              player: player,
+                              prot: widget.prots[index],
+                              word: widget.word,
+                              category: widget.categoryName,
+                              imposter: widget.imposterIndices.contains(index),
+                              imposterSeesCategoryName:
+                                  widget.imposterSeesCategoryName,
+                            ),
+                            Builder(
+                              builder: (context) {
+                                return AnimatedOpacity(
+                                  duration:
+                                      DesignSystem
+                                          .animation
+                                          .defaultDurationMS250,
+                                  opacity: _currentCardRevealed() ? 1 : 0,
+                                  child: Padding(
+                                    padding: EdgeInsetsGeometry.only(
+                                      right: DesignSystem.spacing.x18,
+                                      bottom: DesignSystem.spacing.x64,
+                                    ),
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          DesignSystem.border.radius12,
+                                        ),
+                                        side: BorderSide(
+                                          color: CupertinoColors.activeGreen,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(
+                                          DesignSystem.spacing.x12,
+                                        ),
+                                        child: Icon(
+                                          CupertinoIcons.check_mark,
+                                          size: DesignSystem.size.x32,
+                                          color: CupertinoColors.activeGreen,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                   ],
@@ -97,23 +144,24 @@ class _CardsStageState extends State<CardsStage> {
                       width: double.infinity,
                       child: AnimatedOpacity(
                         duration: DesignSystem.animation.defaultDurationMS250,
-                        opacity:
-                            _lastRevealedCardIndex ==
-                                    (_controller.page?.ceil() ?? -1)
-                                ? 1
-                                : 0,
+                        opacity: _currentCardRevealed() ? 1 : 0,
                         child: CupertinoButton.filled(
-                          onPressed: () {
-                            if (!_isAtLastPlayer()) {
-                              _controller.nextPage(
-                                duration:
-                                    DesignSystem.animation.defaultDurationMS250,
-                                curve: Curves.easeIn,
-                              );
-                            } else {
-                              widget.onStageDone?.call();
-                            }
-                          },
+                          onPressed:
+                              _currentCardRevealed()
+                                  ? () {
+                                    if (!_isAtLastPlayer()) {
+                                      _controller.nextPage(
+                                        duration:
+                                            DesignSystem
+                                                .animation
+                                                .defaultDurationMS250,
+                                        curve: Curves.easeIn,
+                                      );
+                                    } else {
+                                      widget.onStageDone?.call();
+                                    }
+                                  }
+                                  : null,
                           child: Text(
                             (!_isAtLastPlayer()
                                     ? 'gameBtnNextPlayer'

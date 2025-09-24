@@ -7,6 +7,7 @@ import 'package:imposti/router/view.dart';
 import 'package:imposti/utils/prots.dart';
 import 'package:imposti/views/lobby/widgets/group_sheet/group_sheet.dart';
 import 'package:imposti/widgets/builder/hive_builder.dart';
+import 'package:imposti/widgets/shared/how_to_sheet/how_to_sheet.dart';
 import 'package:imposti/widgets/ui/imposti_scaffold.dart';
 
 import '../../models/group/group.dart';
@@ -116,9 +117,26 @@ class _LobbyViewState extends State<LobbyView> {
                   () => ModalUtils.showExpandedModalBottomSheet(
                     context,
                     GroupSheet(),
-                    onClose: () {},
                   ),
               child: Text('lobbyBtnNewGroup'.tr()),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: CupertinoButton(
+              onPressed:
+                  () => ModalUtils.showExpandedModalBottomSheet(
+                    context,
+                    HowToSheet(),
+                  ),
+              child: Row(
+                children: [
+                  Icon(CupertinoIcons.info),
+                  SizedBox(width: DesignSystem.spacing.x12),
+                  Text('sharedHowToSheetTitle'.tr()),
+                ],
+              ),
             ),
           ),
         ],

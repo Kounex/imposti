@@ -5,10 +5,14 @@ import 'package:base_components/base_components.dart';
 import 'package:dough/dough.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:imposti/models/hive_adapters.dart';
 import 'package:imposti/router/router.dart';
 import 'package:imposti/router/routes.dart';
 import 'package:imposti/router/view.dart';
+import 'package:imposti/widgets/shared/how_to_sheet/how_to_sheet.dart';
 import 'package:imposti/widgets/ui/gradient_background.dart';
 import 'package:imposti/widgets/ui/imposti_scaffold.dart';
 
@@ -20,6 +24,23 @@ class DashboardView extends RouterStatefulView {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final settingsBox = Hive.box<dynamic>(HiveKey.settings.name);
+
+    if (!settingsBox.get(
+      HiveSettingsKey.initialHowToPlayShown.name,
+      defaultValue: false,
+    )) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        ModalUtils.showExpandedModalBottomSheet(context, HowToSheet());
+        settingsBox.put(HiveSettingsKey.initialHowToPlayShown.name, true);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ImpostiScaffold(
@@ -95,6 +116,7 @@ class _DashboardViewState extends State<DashboardView> {
                     //   ),
                     // ),
                     GradientBackground(
+                      forceGradient: true,
                       colors: [
                         Theme.of(context).colorScheme.primary.withAlpha(255),
                         Theme.of(context).colorScheme.primary.withAlpha(255),

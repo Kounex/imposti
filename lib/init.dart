@@ -17,13 +17,20 @@ class Init extends StatefulWidget {
 }
 
 class _InitState extends State<Init> {
-  late final Future<void> _init;
+  Future<void>? _init;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   _init = _initApp();
+  // }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    _init = _initApp();
+    _init ??= _initApp();
   }
 
   Future<void> _initApp() async {
