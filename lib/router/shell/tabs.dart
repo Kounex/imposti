@@ -1,3 +1,6 @@
+import 'package:base_components/base_components.dart';
+import 'package:cupertino_native/cupertino_native.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +38,7 @@ class _ShellTabsState extends State<ShellTabs> {
     /// when the locale changes
     context.locale;
 
-    return BottomNavigationBar(
+    Widget baseBar = BottomNavigationBar(
       currentIndex: _getCurrentIndex(),
       items: List.from(
         TabAppRoute.values
@@ -63,5 +66,47 @@ class _ShellTabsState extends State<ShellTabs> {
         }
       },
     );
+
+    return DesignSystem.isApple(context)
+        ? FutureBuilder<IosDeviceInfo>(
+          future: DeviceInfoPlugin().iosInfo,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (DesignSystem.isLiquidGlass(snapshot.data!)) {
+                return CNTabBar(
+                  items: List.from(
+                    TabAppRoute.values
+                        .where((route) => route.isRoot)
+                        .map(
+                          (route) => CNTabBarItem(
+                            icon: CNSymbol(route.sfSymbol!),
+                            label: route.name.tr(),
+                          ),
+                        ),
+                  ),
+                  currentIndex: _getCurrentIndex(),
+                  onTap: (index) {
+                    if (_getCurrentIndex() == index &&
+                        TabAppRoute.values
+                                .where((route) => route.isRoot)
+                                .elementAt(index) !=
+                            BaseAppRouter().currentRoute) {
+                      context.pop();
+                    } else {
+                      BaseAppRouter().navigateTo(
+                        context,
+                        TabAppRoute.values
+                            .where((route) => route.isRoot)
+                            .elementAt(index),
+                      );
+                    }
+                  },
+                );
+              }
+            }
+            return baseBar;
+          },
+        )
+        : baseBar;
   }
 }

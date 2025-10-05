@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:imposti/models/group/group.dart';
-import 'package:imposti/widgets/ui/descriptive_slider.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
 class PlayModeSheet extends StatefulWidget {
@@ -97,7 +96,7 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
           switchOutCurve: Curves.easeIn,
           child: switch (_mode) {
             PlayMode.freestyle => SizedBox(key: _freestyleKey),
-            PlayMode.time => DescriptiveSlider(
+            PlayMode.time => BaseDescriptiveSlider(
               onChanged:
                   (time) => setState(() => _modeTimeSeconds = time.toInt()),
               value: _modeTimeSeconds.toDouble(),
@@ -109,7 +108,7 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
             PlayMode.tap => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DescriptiveSlider(
+                BaseDescriptiveSlider(
                   onChanged: (taps) {
                     setState(() => _modeTapMinTaps = taps.toInt());
                   },
@@ -121,7 +120,7 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
                   divisions: 50 - 5,
                 ),
                 SizedBox(height: DesignSystem.spacing.x48),
-                DescriptiveSlider(
+                BaseDescriptiveSlider(
                   onChanged: (taps) {
                     setState(() => _modeTapMaxTaps = taps.toInt());
                   },

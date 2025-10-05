@@ -15,6 +15,7 @@ abstract class BaseRoute {
   String get fullPath;
   String get name;
   IconData? get icon;
+  String? get sfSymbol;
 
   RouterStatefulView view(GoRouterState state);
 }
@@ -51,6 +52,14 @@ enum AppRoute implements BaseRoute {
 
   @override
   IconData? get icon => switch (this) {
+    AppRoute.intro => null,
+    AppRoute.lobby => null,
+    AppRoute.lobbyCustomCategories => null,
+    AppRoute.game => null,
+  };
+
+  @override
+  String? get sfSymbol => switch (this) {
     AppRoute.intro => null,
     AppRoute.lobby => null,
     AppRoute.lobbyCustomCategories => null,
@@ -98,6 +107,13 @@ enum TabAppRoute implements BaseRoute {
       PhosphorIconsStyle.fill,
     ),
     TabAppRoute.settings => Icons.more_horiz,
+    TabAppRoute.settingsCustomCategories => null,
+  };
+
+  @override
+  String? get sfSymbol => switch (this) {
+    TabAppRoute.dashboard => 'gamecontroller.fill',
+    TabAppRoute.settings => 'ellipsis',
     TabAppRoute.settingsCustomCategories => null,
   };
 
