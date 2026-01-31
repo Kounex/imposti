@@ -46,8 +46,6 @@ class _LobbyViewState extends State<LobbyView> {
             right: 0,
             child: BaseCard(
               title: 'gGroup'.plural(2),
-              backgroundColor:
-                  Theme.of(context).bottomSheetTheme.backgroundColor,
               leftPadding: 0,
               rightPadding: 0,
               paddingChild:

@@ -1,5 +1,6 @@
 import 'package:base_components/base_components.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlayerDialog extends StatelessWidget {
@@ -17,25 +18,27 @@ class PlayerDialog extends StatelessWidget {
     this.onDelete,
   });
 
+  String? _nameCheck(String? text) {
+    if (text == null || text.trim().isEmpty) {
+      return 'sharedInputDialogRequiredError'.tr();
+    }
+
+    if (otherPlayers.any(
+      (player) => player.toLowerCase() == text.trim().toLowerCase(),
+    )) {
+      return 'sharedInputDialogExistsError'.plural(1, args: ['gName'.tr()]);
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseInputDialog(
       title: 'gPlayer'.plural(1),
       body: 'lobbyDialogPlayerDescription'.tr(),
       inputText: player,
-      inputCheck:
-          (text) =>
-              text == null || text.trim().isEmpty
-                  ? 'sharedInputDialogRequiredError'.tr()
-                  : otherPlayers.any(
-                    (player) =>
-                        player.toLowerCase() == text.trim().toLowerCase(),
-                  )
-                  ? 'sharedInputDialogExistsError'.plural(
-                    1,
-                    args: ['gName'.tr()],
-                  )
-                  : null,
+      inputCheck: _nameCheck,
       deleteText: 'gDelete'.tr(),
       cancelText: 'gCancel'.tr(),
       saveText: 'gSave'.tr(),

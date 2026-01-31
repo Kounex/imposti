@@ -48,12 +48,17 @@ class CategorySection extends StatelessWidget {
             ),
             additionalInfo:
                 additionalInfo ??
-                ((categoryUuids?.contains(category.uuid) ?? false)
-                    ? Icon(
-                      CupertinoIcons.check_mark,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                    : null),
+                AnimatedOpacity(
+                  opacity:
+                      (categoryUuids?.contains(category.uuid) ?? false)
+                          ? 1.0
+                          : 0,
+                  duration: DesignSystem.animation.defaultDurationMS150,
+                  child: Icon(
+                    CupertinoIcons.check_mark,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
           ),
         ),
       ),

@@ -77,13 +77,14 @@ class _PlayModeSheetState extends State<PlayModeSheet> {
                 ),
                 additionalInfo: SizedBox(
                   width: DesignSystem.size.x32,
-                  child:
-                      _mode == mode
-                          ? Icon(
-                            CupertinoIcons.check_mark,
-                            color: Theme.of(context).colorScheme.primary,
-                          )
-                          : null,
+                  child: AnimatedOpacity(
+                    opacity: _mode == mode ? 1.0 : 0,
+                    duration: DesignSystem.animation.defaultDurationMS150,
+                    child: Icon(
+                      CupertinoIcons.check_mark,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ),
             ),

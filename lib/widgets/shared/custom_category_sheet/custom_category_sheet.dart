@@ -152,10 +152,29 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
       children: [
         Text('sharedCustomCategoryNameDescription'.tr()),
         SizedBox(height: DesignSystem.spacing.x8),
-        BaseAdaptiveTextField(
-          controller: _name,
-          placeholder: 'Name',
-          clearButton: true,
+        Row(
+          children: [
+            Expanded(
+              child: BaseAdaptiveTextField(
+                controller: _name,
+                placeholder: 'Name',
+                clearButton: true,
+              ),
+            ),
+            // SizedBox(width: DesignSystem.spacing.x12),
+            // SizedBox(
+            //   height: DesignSystem.size.x32,
+            //   child: IconButton.filled(
+            //     onPressed:
+            //         () => ModalUtils.showExpandedModalBottomSheet(
+            //           context,
+            //           CategoryCreator(category: _name.text),
+            //         ),
+            //     icon: Icon(CupertinoIcons.sparkles),
+            //     iconSize: DesignSystem.size.x18,
+            //   ),
+            // ),
+          ],
         ),
         SizedBox(height: DesignSystem.spacing.x24),
         Text('sharedCustomCategoryWordsDescription'.tr()),

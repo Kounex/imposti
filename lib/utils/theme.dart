@@ -270,7 +270,7 @@ class ThemeUtils {
     ),
 
     cardTheme: CardThemeData(
-      color: const Color(0xFF2F2F31),
+      color: const Color.fromARGB(255, 35, 35, 37),
       elevation: 4,
       shadowColor: Colors.black.withOpacity(0.3),
       shape: RoundedRectangleBorder(
@@ -331,7 +331,7 @@ class ThemeUtils {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      modalBackgroundColor: Color(0xFF242426),
+      modalBackgroundColor: Color(0xFF171717),
       showDragHandle: true,
     ),
 
