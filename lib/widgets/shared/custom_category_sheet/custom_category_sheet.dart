@@ -102,16 +102,26 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
   }
 
   Future<void> _openCategoryCreator() async {
-    ModalUtils.showExpandedModalBottomSheet(
-      context,
-      CategoryCreatorSheet(
-        onSave: (words) {
-          setState(() {
-            _words.addAll(words);
-          });
-        },
-        words: _words.isNotEmpty ? _words : null,
-      ),
+    ModalUtils.showCustomBottomSheet(
+      context: context,
+      includeCloseButton: true,
+      popOnClose: false,
+      onClose: () {
+        ModalUtils.showBaseDialog(
+          context,
+          BaseConfirmationDialog(onYes: (_) => Navigator.pop(context)),
+        );
+      },
+      type: BottomSheetType.expanded,
+      builder:
+          (context) => CategoryCreatorSheet(
+            onSave: (words) {
+              setState(() {
+                _words.addAll(words);
+              });
+            },
+            words: _words.isNotEmpty ? _words : null,
+          ),
     );
   }
 
