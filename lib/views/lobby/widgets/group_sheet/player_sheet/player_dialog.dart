@@ -20,7 +20,7 @@ class PlayerDialog extends StatelessWidget {
 
   String? _nameCheck(String? text) {
     if (text == null || text.trim().isEmpty) {
-      return 'sharedInputDialogRequiredError'.tr();
+      return 'gRequiredError'.tr();
     }
 
     if (otherPlayers.any(

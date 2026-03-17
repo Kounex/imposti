@@ -36,10 +36,9 @@ class _InitState extends State<Init> {
   Future<void> _initApp() async {
     if (mounted) {
       await HiveUtils.setSavedLanguage(context, true);
-    }
-    if (mounted) {
       await HiveUtils.setInitialThemeMode(context);
     }
+
     await Future.wait([
       HiveUtils.setBaseCategories(),
       Future.delayed(const Duration(seconds: 1)),

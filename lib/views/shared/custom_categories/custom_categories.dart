@@ -70,7 +70,6 @@ class _CustomCategoriesViewState extends State<CustomCategoriesView> {
                               ),
                               child: Text(category.name['custom']!),
                             ),
-                            trailing: Icon(Icons.edit),
                           ),
                         ),
                       ),

@@ -8,7 +8,7 @@
 PRODUCT_NAME = imposti
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.imposti
+PRODUCT_BUNDLE_IDENTIFIER = com.kounex.imposti
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

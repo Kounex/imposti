@@ -13,8 +13,6 @@ class BaseAppRouter {
 
   late final GoRouter router;
 
-  /// Initially [currentRoute] is the [initialLocation] and will be updated
-  /// in the redirect function
   BaseRoute get currentRoute =>
       <BaseRoute>[...AppRoute.values, ...TabAppRoute.values].firstWhere(
         (route) => route.fullPath == router.state.fullPath,
@@ -24,7 +22,7 @@ class BaseAppRouter {
   BaseAppRouter._() {
     router = GoRouter(
       navigatorKey: rootKey,
-      initialLocation: TabAppRoute.dashboard.fullPath,
+      initialLocation: AppRoute.intro.fullPath,
       routes: [
         ..._routes(AppRoute.values),
         ShellRoute(

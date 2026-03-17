@@ -13,11 +13,16 @@ class ShellScaffold extends StatefulWidget {
 class _ShellScaffoldState extends State<ShellScaffold> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: widget.child,
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      bottomNavigationBar: ShellTabs(),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Scaffold(
+          body: widget.child,
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+        ),
+        ShellTabs(),
+      ],
     );
   }
 }

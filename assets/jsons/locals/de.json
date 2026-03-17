@@ -40,13 +40,16 @@
     "gLanguage": "Sprache",
     "gMore": "Mehr",
     "gName": "Name",
+    "gNext": "Weiter",
     "gNo": "Nein",
     "gOptional": "Optional",
     "gPlayer": {
         "one": "Spieler",
         "two": "Spieler"
     },
+    "gRequiredError": "Darf nicht leer sein!",
     "gSave": "Speichern",
+    "gStart": "Start",
     "gWord": "Wort",
     "gYes": "Ja",
     "lobbyAmountImpostersDescription": "Wie viele Imposter es pro Runde gibt. Es wird jede Runde zufällig zwischen Minimum und Maximum gewählt!",
@@ -91,6 +94,11 @@
     "settingsRateApp": "App bewerten",
     "settingsYourCategories": "Deine Kategorien",
     "sharedCustomCategoryBtnNewWord": "Neues Wort",
+    "sharedCustomCategoryCreatorDescription": "Verwende die AI Funktionalität deines Geräts - lokal - und lass dir die Wörter für deine Kategorie magisch von selbst erstellen!",
+    "sharedCustomCategoryCreatorGenerate": "Erstellen",
+    "sharedCustomCategoryCreatorGenerating": "Wörter werden generiert...",
+    "sharedCustomCategoryCreatorPrompt": "Beschreibe deine Kategorie, um passende Wörter erstellen zu lassen",
+    "sharedCustomCategoryCreatorTitle": "Kategorie erstellen",
     "sharedCustomCategoryDialogDeleteBody": "Sicher, dass du diese Kategorie löschen willst?",
     "sharedCustomCategoryDialogDeleteTitle": "Kategorie löschen?",
     "sharedCustomCategoryDialogDescription": "Wort bearbeiten, hinzufügen oder löschen.",
@@ -104,6 +112,5 @@
     "sharedInputDialogExistsError": {
         "one": "{} existiert bereits!",
         "two": "{} existieren bereits!"
-    },
-    "sharedInputDialogRequiredError": "Darf nicht leer sein!"
+    }
 }

@@ -12,3 +12,11 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(PlayModeAdapter());
   }
 }
+
+extension IsolatedHiveRegistrar on IsolatedHiveInterface {
+  void registerAdapters() {
+    registerAdapter(CategoryAdapter());
+    registerAdapter(GroupAdapter());
+    registerAdapter(PlayModeAdapter());
+  }
+}

@@ -8,7 +8,7 @@ part of 'hive_adapters.dart';
 
 class GroupAdapter extends TypeAdapter<Group> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   Group read(BinaryReader reader) {
@@ -76,7 +76,7 @@ class GroupAdapter extends TypeAdapter<Group> {
 
 class CategoryAdapter extends TypeAdapter<Category> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   Category read(BinaryReader reader) {
@@ -128,7 +128,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
 
 class PlayModeAdapter extends TypeAdapter<PlayMode> {
   @override
-  final int typeId = 3;
+  final typeId = 3;
 
   @override
   PlayMode read(BinaryReader reader) {

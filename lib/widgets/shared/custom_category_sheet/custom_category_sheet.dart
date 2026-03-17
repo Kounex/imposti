@@ -9,6 +9,8 @@ import 'package:imposti/models/hive_adapters.dart';
 import 'package:imposti/widgets/shared/custom_category_sheet/word_dialog.dart';
 import 'package:imposti/widgets/ui/sheet.dart';
 
+import 'category_creator.dart';
+
 class CustomCategorySheet extends StatefulWidget {
   final Category? category;
 
@@ -34,7 +36,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
       text: widget.category?.name['custom'],
       check: (text) {
         if (text == null || text.trim().isEmpty) {
-          return 'sharedInputDialogRequiredError'.tr();
+          return 'gRequiredError'.tr();
         }
         if (Hive.box<Category>(HiveKey.category.name).values.any(
           (category) =>
@@ -99,6 +101,20 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
     }
   }
 
+  Future<void> _openCategoryCreator() async {
+    ModalUtils.showExpandedModalBottomSheet(
+      context,
+      CategoryCreatorSheet(
+        onSave: (words) {
+          setState(() {
+            _words.addAll(words);
+          });
+        },
+        words: _words.isNotEmpty ? _words : null,
+      ),
+    );
+  }
+
   Future<void> _deleteCategory() async {
     ModalUtils.showBaseDialog(
       context,
@@ -161,19 +177,15 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                 clearButton: true,
               ),
             ),
-            // SizedBox(width: DesignSystem.spacing.x12),
-            // SizedBox(
-            //   height: DesignSystem.size.x32,
-            //   child: IconButton.filled(
-            //     onPressed:
-            //         () => ModalUtils.showExpandedModalBottomSheet(
-            //           context,
-            //           CategoryCreator(category: _name.text),
-            //         ),
-            //     icon: Icon(CupertinoIcons.sparkles),
-            //     iconSize: DesignSystem.size.x18,
-            //   ),
-            // ),
+            SizedBox(width: DesignSystem.spacing.x12),
+            SizedBox(
+              height: DesignSystem.size.x32,
+              child: IconButton.filled(
+                onPressed: _openCategoryCreator,
+                icon: Icon(CupertinoIcons.sparkles),
+                iconSize: DesignSystem.size.x18,
+              ),
+            ),
           ],
         ),
         SizedBox(height: DesignSystem.spacing.x24),
@@ -208,7 +220,6 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
                       (word) => ListTile(
                         onTap: () => _handleWordTap(word),
                         title: Text(word),
-                        trailing: Icon(Icons.edit),
                       ),
                     ),
                   ),
@@ -221,7 +232,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
           SizedBox(height: DesignSystem.spacing.x8),
           Fader(
             child: Text(
-              'sharedInputDialogRequiredError'.tr(),
+              'gRequiredError'.tr(),
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.error,
               ),

@@ -40,46 +40,47 @@ class ImpostiScaffold extends StatelessWidget {
       body: Stack(
         children: [
           GradientBackground(),
-          SafeArea(
-            child: Padding(
-              padding:
-                  (contentPadding ??
-                      EdgeInsets.symmetric(
-                        horizontal: DesignSystem.spacing.x24,
-                        vertical:
-                            contentVerticalPadding
-                                ? DesignSystem.spacing.x24
-                                : 0,
-                      )) +
-                  (additionalContentPadding ?? EdgeInsets.zero),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  body ??
-                      ListView(
-                        physics:
-                            !isContentScrollable
-                                ? NeverScrollableScrollPhysics()
-                                : null,
-                        children: children ?? [],
+          Padding(
+            padding:
+                (contentPadding ??
+                    EdgeInsets.symmetric(
+                      horizontal: DesignSystem.spacing.x24,
+                      vertical:
+                          contentVerticalPadding ? DesignSystem.spacing.x24 : 0,
+                    )) +
+                (additionalContentPadding ?? EdgeInsets.zero),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if (body != null) SafeArea(child: body!),
+                if (body == null)
+                  ListView(
+                    padding: EdgeInsets.zero,
+                    physics:
+                        !isContentScrollable
+                            ? NeverScrollableScrollPhysics()
+                            : null,
+                    children: [
+                      SizedBox(height: MediaQuery.paddingOf(context).top),
+                      ...children ?? [],
+                    ],
+                  ),
+                if (includeBackButton)
+                  Positioned(
+                    top: MediaQuery.paddingOf(context).top,
+                    left: 0,
+                    child: CupertinoButton.filled(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.arrow_back_ios_new),
+                          Text('gBack'.tr()),
+                        ],
                       ),
-                  if (includeBackButton)
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: CupertinoButton.filled(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.arrow_back_ios_new),
-                            Text('gBack'.tr()),
-                          ],
-                        ),
-                        onPressed: () => BaseAppRouter().navigateBack(context),
-                      ),
+                      onPressed: () => BaseAppRouter().navigateBack(context),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
           ),
         ],

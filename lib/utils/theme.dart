@@ -112,7 +112,7 @@ class ThemeUtils {
     cardTheme: CardThemeData(
       color: const Color(0xFFF6F1EB),
       elevation: 6,
-      shadowColor: Colors.black.withOpacity(0.08),
+      shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: const BorderSide(color: Color(0xFFD2BFA8)),
@@ -126,7 +126,7 @@ class ThemeUtils {
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         elevation: 4,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Colors.black.withValues(alpha: 0.1),
         textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -272,7 +272,7 @@ class ThemeUtils {
     cardTheme: CardThemeData(
       color: const Color.fromARGB(255, 35, 35, 37),
       elevation: 4,
-      shadowColor: Colors.black.withOpacity(0.3),
+      shadowColor: Colors.black.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: const BorderSide(color: Color(0xFFD2BFA8)),
@@ -290,7 +290,7 @@ class ThemeUtils {
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         elevation: 4,
-        shadowColor: Colors.black.withOpacity(0.4),
+        shadowColor: Colors.black.withValues(alpha: 0.4),
         textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

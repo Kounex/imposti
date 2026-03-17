@@ -26,7 +26,7 @@ class WordDialog extends StatelessWidget {
       inputCheck:
           (text) =>
               text == null || text.trim().isEmpty
-                  ? 'sharedInputDialogRequiredError'.tr()
+                  ? 'gRequiredError'.tr()
                   : (otherWords?.any(
                         (word) =>
                             word.toLowerCase() == text.trim().toLowerCase(),

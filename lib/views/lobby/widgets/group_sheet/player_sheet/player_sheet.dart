@@ -101,7 +101,6 @@ class _PlayerSheetState extends State<PlayerSheet> {
                       (player) => ListTile(
                         onTap: () => _handlePlayerTap(player),
                         title: Text(player),
-                        trailing: Icon(Icons.edit),
                       ),
                     ),
                   ),
