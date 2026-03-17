@@ -73,11 +73,31 @@ class _LobbyViewState extends State<LobbyView> {
                               groupBox.values.map(
                                 (group) => ListTile(
                                   onTap:
-                                      () =>
-                                          ModalUtils.showExpandedModalBottomSheet(
+                                      () => ModalUtils.showCustomBottomSheet(
+                                        context,
+                                        type: BottomSheetType.expanded,
+                                        includeCloseButton: true,
+                                        popOnClose: false,
+                                        onClose: (context) {
+                                          ModalUtils.showBaseDialog(
                                             context,
-                                            GroupSheet(group: group),
-                                          ),
+                                            BaseConfirmationDialog(
+                                              onYes:
+                                                  (_) => Navigator.pop(context),
+                                              title:
+                                                  'sharedCloseWarningTitle'
+                                                      .tr(),
+                                              body:
+                                                  'sharedCloseWarningBody'.tr(),
+                                              noText: 'gNo'.tr(),
+                                              yesText: 'gYes'.tr(),
+                                              isYesDestructive: true,
+                                            ),
+                                          );
+                                        },
+                                        builder:
+                                            (_) => GroupSheet(group: group),
+                                      ),
                                   title: Text(
                                     group.name ?? _getPlayerNames(group),
                                     maxLines: 1,
@@ -112,9 +132,25 @@ class _LobbyViewState extends State<LobbyView> {
             right: 0,
             child: CupertinoButton.filled(
               onPressed:
-                  () => ModalUtils.showExpandedModalBottomSheet(
+                  () => ModalUtils.showCustomBottomSheet(
                     context,
-                    GroupSheet(),
+                    type: BottomSheetType.expanded,
+                    includeCloseButton: true,
+                    popOnClose: false,
+                    onClose: (context) {
+                      ModalUtils.showBaseDialog(
+                        context,
+                        BaseConfirmationDialog(
+                          onYes: (_) => Navigator.pop(context),
+                          title: 'sharedCloseWarningTitle'.tr(),
+                          body: 'sharedCloseWarningBody'.tr(),
+                          noText: 'gNo'.tr(),
+                          yesText: 'gYes'.tr(),
+                          isYesDestructive: true,
+                        ),
+                      );
+                    },
+                    builder: (_) => GroupSheet(),
                   ),
               child: Text('lobbyBtnNewGroup'.tr()),
             ),
@@ -124,9 +160,11 @@ class _LobbyViewState extends State<LobbyView> {
             right: 0,
             child: CupertinoButton(
               onPressed:
-                  () => ModalUtils.showExpandedModalBottomSheet(
+                  () => ModalUtils.showCustomBottomSheet(
                     context,
-                    HowToSheet(),
+                    type: BottomSheetType.expanded,
+                    includeCloseButton: true,
+                    builder: (_) => HowToSheet(),
                   ),
               child: Row(
                 children: [

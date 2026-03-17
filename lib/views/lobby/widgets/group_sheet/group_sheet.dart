@@ -95,50 +95,128 @@ class _GroupSheetState extends State<GroupSheet> {
     }
   }
 
-  void _handlePlayerTile() => ModalUtils.showExpandedModalBottomSheet(
-    context,
-    PlayerSheet(
-      group: _group,
-      onSave:
-          (players) => setState(
-            () =>
-                _group = _group.copyWith(
-                  players: players,
-                  amountMaxImposters:
-                      _group.amountMaxImposters > players.length
-                          ? players.length
-                          : _group.amountMaxImposters,
+  void _handlePlayerTile() {
+    bool isDirty = false;
+
+    ModalUtils.showCustomBottomSheet(
+      context,
+      type: BottomSheetType.expanded,
+      includeCloseButton: true,
+      popOnClose: false,
+      onClose: (context) {
+        if (!isDirty) {
+          Navigator.pop(context);
+          return;
+        }
+        ModalUtils.showBaseDialog(
+          context,
+          BaseConfirmationDialog(
+            onYes: (_) => Navigator.pop(context),
+            title: 'sharedCloseWarningTitle'.tr(),
+            body: 'sharedCloseWarningBody'.tr(),
+            noText: 'gNo'.tr(),
+            yesText: 'gYes'.tr(),
+            isYesDestructive: true,
+          ),
+        );
+      },
+      builder:
+          (context) => PlayerSheet(
+            group: _group,
+            onDirtyChanged: (dirty) => isDirty = dirty,
+            onSave:
+                (players) => setState(
+                  () =>
+                      _group = _group.copyWith(
+                        players: players,
+                        amountMaxImposters:
+                            _group.amountMaxImposters > players.length
+                                ? players.length
+                                : _group.amountMaxImposters,
+                      ),
                 ),
           ),
-    ),
-  );
+    );
+  }
 
-  void _handleImposterTile() => ModalUtils.showExpandedModalBottomSheet(
-    context,
-    ImposterSheet(
-      group: _group,
-      onSave:
-          (group) => setState(
-            () =>
-                _group = _group.copyWith(
-                  amountMinImposters: group.amountMinImposters,
-                  amountMaxImposters: group.amountMaxImposters,
-                  zeroImposterMode: group.zeroImposterMode,
+  void _handleImposterTile() {
+    bool isDirty = false;
+
+    ModalUtils.showCustomBottomSheet(
+      context,
+      type: BottomSheetType.expanded,
+      includeCloseButton: true,
+      popOnClose: false,
+      onClose: (context) {
+        if (!isDirty) {
+          Navigator.pop(context);
+          return;
+        }
+        ModalUtils.showBaseDialog(
+          context,
+          BaseConfirmationDialog(
+            onYes: (_) => Navigator.pop(context),
+            title: 'sharedCloseWarningTitle'.tr(),
+            body: 'sharedCloseWarningBody'.tr(),
+            noText: 'gNo'.tr(),
+            yesText: 'gYes'.tr(),
+            isYesDestructive: true,
+          ),
+        );
+      },
+      builder:
+          (_) => ImposterSheet(
+            group: _group,
+            onDirtyChanged: (dirty) => isDirty = dirty,
+            onSave:
+                (group) => setState(
+                  () =>
+                      _group = _group.copyWith(
+                        amountMinImposters: group.amountMinImposters,
+                        amountMaxImposters: group.amountMaxImposters,
+                        zeroImposterMode: group.zeroImposterMode,
+                      ),
                 ),
           ),
-    ),
-  );
+    );
+  }
 
-  void _handleCategoryTile() => ModalUtils.showExpandedModalBottomSheet(
-    context,
-    CategorySheet(
-      group: _group,
-      onSave:
-          (categoryUuids) => setState(
-            () => _group = _group.copyWith(categoryUuids: categoryUuids),
+  void _handleCategoryTile() {
+    bool isDirty = false;
+
+    ModalUtils.showCustomBottomSheet(
+      context,
+      type: BottomSheetType.expanded,
+      includeCloseButton: true,
+      popOnClose: false,
+      onClose: (context) {
+        if (!isDirty) {
+          Navigator.pop(context);
+          return;
+        }
+        ModalUtils.showBaseDialog(
+          context,
+          BaseConfirmationDialog(
+            onYes: (_) => Navigator.pop(context),
+            title: 'sharedCloseWarningTitle'.tr(),
+            body: 'sharedCloseWarningBody'.tr(),
+            noText: 'gNo'.tr(),
+            yesText: 'gYes'.tr(),
+            isYesDestructive: true,
           ),
-    ),
-  );
+        );
+      },
+      builder:
+          (_) => CategorySheet(
+            group: _group,
+            onDirtyChanged: (dirty) => isDirty = dirty,
+            onSave:
+                (categoryUuids) => setState(
+                  () => _group = _group.copyWith(categoryUuids: categoryUuids),
+                ),
+          ),
+    );
+  }
 
   String _amountImpostersString() {
     String amount = '${_group.amountMinImposters}';
@@ -279,21 +357,23 @@ class _GroupSheetState extends State<GroupSheet> {
           tiles: [
             BaseCupertinoListTile(
               onTap:
-                  () => ModalUtils.showExpandedModalBottomSheet(
+                  () => ModalUtils.showCustomBottomSheet(
                     context,
-                    PlayModeSheet(
-                      group: _group,
-                      onSave:
-                          (group) => setState(
-                            () =>
-                                _group = _group.copyWith(
-                                  mode: group.mode,
-                                  modeTimeSeconds: group.modeTimeSeconds,
-                                  modeTapMinTaps: group.modeTapMinTaps,
-                                  modeTapMaxTaps: group.modeTapMaxTaps,
-                                ),
-                          ),
-                    ),
+                    includeCloseButton: true,
+                    builder:
+                        (_) => PlayModeSheet(
+                          group: _group,
+                          onSave:
+                              (group) => setState(
+                                () =>
+                                    _group = _group.copyWith(
+                                      mode: group.mode,
+                                      modeTimeSeconds: group.modeTimeSeconds,
+                                      modeTapMinTaps: group.modeTapMinTaps,
+                                      modeTapMaxTaps: group.modeTapMaxTaps,
+                                    ),
+                              ),
+                        ),
                   ),
               title: Text('lobbyPlayModeTitle'.tr()),
               additionalInfo: Row(

@@ -103,6 +103,8 @@
     "sharedCustomCategoryDialogDeleteTitle": "Kategorie löschen?",
     "sharedCustomCategoryDialogDescription": "Wort bearbeiten, hinzufügen oder löschen.",
     "sharedCustomCategoryNameDescription": "Name deiner Kategorie:",
+    "sharedCloseWarningBody": "Sicher, dass du diesen Vorgang abbrechen willst?",
+    "sharedCloseWarningTitle": "Warnung",
     "sharedCustomCategoryTitle": "Deine Kategorie",
     "sharedCustomCategoryWordsCardEmpty": "Noch keine Wörter!",
     "sharedCustomCategoryWordsDescription": "Wörter in dieser Kategorie:",

@@ -40,7 +40,12 @@ class _DashboardViewState extends State<DashboardView> {
       defaultValue: false,
     )) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        ModalUtils.showExpandedModalBottomSheet(context, HowToSheet());
+        ModalUtils.showCustomBottomSheet(
+          context,
+          type: BottomSheetType.expanded,
+          includeCloseButton: true,
+          builder: (_) => HowToSheet(),
+        );
         settingsBox.put(HiveSettingsKey.initialHowToPlayShown.name, true);
       });
     }

@@ -186,9 +186,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 BaseCupertinoListTile(
                   onTap:
-                      () => ModalUtils.showExpandedModalBottomSheet(
+                      () => ModalUtils.showCustomBottomSheet(
                         context,
-                        DonateSheet(),
+                        type: BottomSheetType.expanded,
+                        includeCloseButton: true,
+                        builder: (_) => DonateSheet(),
                       ),
                   title: Text('settingsDonate'.tr()),
                   leadingIcon: PhosphorIcons.cardholder(

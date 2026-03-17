@@ -8,9 +8,15 @@ import 'package:imposti/widgets/ui/sheet.dart';
 
 class PlayerSheet extends StatefulWidget {
   final Group group;
+  final void Function(bool isDirty)? onDirtyChanged;
   final void Function(List<String> players) onSave;
 
-  const PlayerSheet({super.key, required this.group, required this.onSave});
+  const PlayerSheet({
+    super.key,
+    required this.group,
+    required this.onSave,
+    this.onDirtyChanged,
+  });
 
   @override
   State<PlayerSheet> createState() => _PlayerSheetState();
@@ -28,9 +34,19 @@ class _PlayerSheetState extends State<PlayerSheet> {
     _players.addAll(widget.group.players);
   }
 
+  void _checkDirty() {
+    final originalPlayers = widget.group.players;
+    final playersChanged =
+        _players.length != originalPlayers.length ||
+        _players.asMap().entries.any((e) => e.value != originalPlayers[e.key]);
+
+    widget.onDirtyChanged?.call(playersChanged);
+  }
+
   void _handlePlayerDialogDelete(String player) {
     if (_players.length > 3) {
       setState(() => _players.remove(player));
+      _checkDirty();
     } else {
       ModalUtils.showBaseDialog(
         context,
@@ -48,10 +64,12 @@ class _PlayerSheetState extends State<PlayerSheet> {
           [editPlayer.trim()],
         );
       });
+      _checkDirty();
     } else if (editPlayer != null && editPlayer.trim().isNotEmpty) {
       setState(() {
         _players.add(editPlayer.trim());
       });
+      _checkDirty();
     }
   }
 

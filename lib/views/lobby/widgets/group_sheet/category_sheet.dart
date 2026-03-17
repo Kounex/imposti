@@ -16,8 +16,14 @@ class CategorySheet extends StatefulWidget {
   final Group group;
 
   final void Function(List<String> categoryUuids) onSave;
+  final void Function(bool dirty)? onDirtyChanged;
 
-  const CategorySheet({super.key, required this.group, required this.onSave});
+  const CategorySheet({
+    super.key,
+    required this.group,
+    required this.onSave,
+    this.onDirtyChanged,
+  });
 
   @override
   State<CategorySheet> createState() => _CategorySheetState();
@@ -31,6 +37,15 @@ class _CategorySheetState extends State<CategorySheet> {
     super.initState();
 
     _categoryUuids.addAll(widget.group.categoryUuids);
+  }
+
+  void _checkDirty() {
+    final original = widget.group.categoryUuids;
+    final isDirty =
+        _categoryUuids.length != original.length ||
+        _categoryUuids.any((uuid) => !original.contains(uuid));
+
+    widget.onDirtyChanged?.call(isDirty);
   }
 
   void _handleCategoryTap(Category category) {
@@ -50,6 +65,8 @@ class _CategorySheetState extends State<CategorySheet> {
         _categoryUuids.add(category.uuid);
       }
     });
+
+    _checkDirty();
   }
 
   @override

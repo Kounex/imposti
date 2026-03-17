@@ -7,10 +7,16 @@ import 'package:imposti/widgets/ui/sheet.dart';
 import '../../../services/intelligence_service.dart';
 
 class CategoryCreatorSheet extends StatefulWidget {
-  final List<String>? words;
+  final List<String>? existingWords;
   final void Function(List<String> words) onSave;
+  final void Function(bool isDirty)? onDirtyChanged;
 
-  const CategoryCreatorSheet({super.key, this.words, required this.onSave});
+  const CategoryCreatorSheet({
+    super.key,
+    this.existingWords,
+    required this.onSave,
+    this.onDirtyChanged,
+  });
 
   @override
   State<CategoryCreatorSheet> createState() => _CategoryCreatorSheetState();
@@ -35,8 +41,8 @@ class _CategoryCreatorSheetState extends State<CategoryCreatorSheet> {
       },
     );
 
-    if (widget.words != null) {
-      _existingWords.addAll(widget.words!);
+    if (widget.existingWords != null) {
+      _existingWords.addAll(widget.existingWords!);
     }
   }
 
@@ -68,6 +74,7 @@ class _CategoryCreatorSheetState extends State<CategoryCreatorSheet> {
             existingLower.add(wordLower);
           }
         }
+        widget.onDirtyChanged?.call(_words.isNotEmpty);
       });
     } catch (e) {
       if (mounted) {
@@ -116,7 +123,10 @@ class _CategoryCreatorSheetState extends State<CategoryCreatorSheet> {
               _words
                   .map(
                     (word) => BaseChip(
-                      onDeleted: () => setState(() => _words.remove(word)),
+                      onDeleted: () {
+                        setState(() => _words.remove(word));
+                        widget.onDirtyChanged?.call(_words.isNotEmpty);
+                      },
                       label: Text(word),
                     ),
                   )

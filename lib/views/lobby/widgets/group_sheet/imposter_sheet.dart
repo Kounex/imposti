@@ -10,8 +10,14 @@ class ImposterSheet extends StatefulWidget {
   final Group group;
 
   final void Function(Group group) onSave;
+  final void Function(bool isDirty)? onDirtyChanged;
 
-  const ImposterSheet({super.key, required this.group, required this.onSave});
+  const ImposterSheet({
+    super.key,
+    required this.group,
+    required this.onSave,
+    this.onDirtyChanged,
+  });
 
   @override
   State<ImposterSheet> createState() => _ImposterSheetState();
@@ -29,6 +35,55 @@ class _ImposterSheetState extends State<ImposterSheet> {
     _amountMinImposters = widget.group.amountMinImposters;
     _amountMaxImposters = widget.group.amountMaxImposters;
     _zeroImposterMode = widget.group.zeroImposterMode;
+  }
+
+  void _checkDirty() {
+    widget.onDirtyChanged?.call(
+      _amountMinImposters != widget.group.amountMinImposters ||
+          _amountMaxImposters != widget.group.amountMaxImposters ||
+          _zeroImposterMode != widget.group.zeroImposterMode,
+    );
+  }
+
+  void _onDecrementMinImposters() {
+    setState(() {
+      if (_amountMinImposters > 0) {
+        _amountMinImposters--;
+      }
+    });
+    _checkDirty();
+  }
+
+  void _onIncrementMinImposters() {
+    setState(() {
+      if (_amountMinImposters < _amountMaxImposters) {
+        _amountMinImposters++;
+      }
+    });
+    _checkDirty();
+  }
+
+  void _onDecrementMaxImposters() {
+    setState(() {
+      if (_amountMaxImposters > _amountMinImposters) {
+        _amountMaxImposters--;
+      }
+    });
+    _checkDirty();
+  }
+
+  void _onIncrementMaxImposters() {
+    setState(() {
+      if (_amountMaxImposters < widget.group.players.length) {
+        _amountMaxImposters++;
+      }
+    });
+    _checkDirty();
+  }
+
+  void _onZeroImposterModeChanged(bool change) {
+    setState(() => _zeroImposterMode = change);
+    _checkDirty();
   }
 
   @override
@@ -58,12 +113,10 @@ class _ImposterSheetState extends State<ImposterSheet> {
               additionalInfo: CountStepper(
                 count: _amountMinImposters,
                 onDecrement:
-                    _amountMinImposters > 0
-                        ? () => setState(() => _amountMinImposters--)
-                        : null,
+                    _amountMinImposters > 0 ? _onDecrementMinImposters : null,
                 onIncrement:
                     _amountMinImposters < _amountMaxImposters
-                        ? () => setState(() => _amountMinImposters++)
+                        ? _onIncrementMinImposters
                         : null,
               ),
             ),
@@ -79,11 +132,11 @@ class _ImposterSheetState extends State<ImposterSheet> {
                 count: _amountMaxImposters,
                 onDecrement:
                     _amountMaxImposters > _amountMinImposters
-                        ? () => setState(() => _amountMaxImposters--)
+                        ? _onDecrementMaxImposters
                         : null,
                 onIncrement:
                     _amountMaxImposters < widget.group.players.length
-                        ? () => setState(() => _amountMaxImposters++)
+                        ? _onIncrementMaxImposters
                         : null,
               ),
             ),
@@ -97,10 +150,7 @@ class _ImposterSheetState extends State<ImposterSheet> {
               title: Text('lobbyImposterZeroTitle'.tr()),
               additionalInfo: BaseAdaptiveSwitch(
                 value: _zeroImposterMode,
-                onChanged:
-                    _amountMinImposters > 0
-                        ? (change) => setState(() => _zeroImposterMode = change)
-                        : null,
+                onChanged: _onZeroImposterModeChanged,
               ),
             ),
           ],

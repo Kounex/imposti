@@ -103,6 +103,8 @@
     "sharedCustomCategoryDialogDeleteTitle": "Delete category?",
     "sharedCustomCategoryDialogDescription": "Edit, add or delete word.",
     "sharedCustomCategoryNameDescription": "Name of your category:",
+    "sharedCloseWarningBody": "Are you sure you want to discard this process?",
+    "sharedCloseWarningTitle": "Warning",
     "sharedCustomCategoryTitle": "Your category",
     "sharedCustomCategoryWordsCardEmpty": "No words yet!",
     "sharedCustomCategoryWordsDescription": "Words in this category:",

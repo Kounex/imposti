@@ -14,9 +14,15 @@ import 'category_creator.dart';
 class CustomCategorySheet extends StatefulWidget {
   final Category? category;
 
+  final void Function(bool isDirty)? onDirtyChanged;
   final void Function(String name, List<String> words) onSave;
 
-  const CustomCategorySheet({super.key, this.category, required this.onSave});
+  const CustomCategorySheet({
+    super.key,
+    this.category,
+    required this.onSave,
+    this.onDirtyChanged,
+  });
 
   @override
   State<CustomCategorySheet> createState() => _CustomCategorySheetState();
@@ -61,6 +67,26 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
     if (widget.category?.words['custom'] != null) {
       _words.addAll(widget.category!.words['custom']!);
     }
+
+    _name.addListener(_checkDirty);
+  }
+
+  @override
+  void dispose() {
+    _name.removeListener(_checkDirty);
+    super.dispose();
+  }
+
+  void _checkDirty() {
+    final originalName = widget.category?.name['custom'] ?? '';
+    final originalWords = widget.category?.words['custom'] ?? [];
+
+    final nameChanged = _name.text.trim() != originalName;
+    final wordsChanged =
+        _words.length != originalWords.length ||
+        _words.asMap().entries.any((e) => e.value != originalWords[e.key]);
+
+    widget.onDirtyChanged?.call(nameChanged || wordsChanged);
   }
 
   void _handleWordTap(String word) => ModalUtils.showBaseDialog(
@@ -83,6 +109,7 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
 
   void _handleWordDialogDelete(String word) {
     setState(() => _words.remove(word));
+    _checkDirty();
   }
 
   void _handleWordDialogSave(String? editWord, [String? ogWord]) {
@@ -94,33 +121,52 @@ class _CustomCategorySheetState extends State<CustomCategorySheet> {
           [editWord.trim()],
         );
       });
+      _checkDirty();
     } else if (editWord != null && editWord.trim().isNotEmpty) {
       setState(() {
         _words.add(editWord.trim());
       });
+      _checkDirty();
     }
   }
 
   Future<void> _openCategoryCreator() async {
+    bool isDirty = false;
+
     ModalUtils.showCustomBottomSheet(
-      context: context,
+      context,
+      type: BottomSheetType.expanded,
       includeCloseButton: true,
       popOnClose: false,
-      onClose: () {
+      onClose: (context) {
+        if (!isDirty) {
+          Navigator.pop(context);
+          return;
+        }
         ModalUtils.showBaseDialog(
           context,
-          BaseConfirmationDialog(onYes: (_) => Navigator.pop(context)),
+          BaseConfirmationDialog(
+            onYes: (_) => Navigator.pop(context),
+            title: 'sharedCloseWarningTitle'.tr(),
+            body: 'sharedCloseWarningBody'.tr(),
+            noText: 'gNo'.tr(),
+            yesText: 'gYes'.tr(),
+            isYesDestructive: true,
+          ),
         );
       },
-      type: BottomSheetType.expanded,
       builder:
           (context) => CategoryCreatorSheet(
             onSave: (words) {
               setState(() {
                 _words.addAll(words);
               });
+              _checkDirty();
             },
-            words: _words.isNotEmpty ? _words : null,
+            onDirtyChanged: (dirty) {
+              isDirty = dirty;
+            },
+            existingWords: _words.isNotEmpty ? _words : null,
           ),
     );
   }
